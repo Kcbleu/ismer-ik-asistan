@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>İşmer Portal – İK Asistanı prototipi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* Portalın temsili ana sayfası. Gerçek portalda bu sayfa yok; sadece asistan butonu eklenir. */
+  :root {
+    --navy: #0033A1; --navy-btn: #204A9E; --blue: #2563EB; --text: #1E293B; --muted: #64748B;
+    --border: #E5E7EB; --border-input: #CAD5E2; --bg: #F8FAFC; --divider: #EEF1F6; --badge: #FF2056;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Ubuntu", system-ui, sans-serif; color: var(--text); background: var(--bg); font-size: 15px; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { width: min(1440px, 100% - 32px); margin: 0 auto; }
+
+  header.top { background: #fff; border-bottom: 1px solid var(--divider); }
+  .bar { display: flex; align-items: center; gap: 28px; padding: 14px 0 12px; }
+  .logo { height: 64px; width: auto; display: block; }
+  .search { flex: 0 1 300px; height: 40px; border: 1px solid var(--border-input); border-radius: 999px; padding: 0 16px; font: inherit; color: var(--text); }
+  .search::placeholder { color: #94A3B8; }
+  .spacer { flex: 1; }
+  .bell { position: relative; color: var(--navy); width: 40px; height: 40px; display: grid; place-items: center; }
+  .bell b { position: absolute; top: 3px; right: 2px; background: var(--badge); color: #fff; font-size: 10px; font-weight: 700; min-width: 17px; height: 17px; border-radius: 999px; display: grid; place-items: center; padding: 0 4px; }
+  .avatar { width: 56px; height: 56px; border-radius: 50%; border: 2px solid var(--navy); display: grid; place-items: center; color: #94A3B8; background: #F1F5F9; }
+
+  nav.menu { background: var(--navy); border-radius: 12px; margin-bottom: 10px; }
+  nav.menu ul { display: flex; justify-content: space-between; gap: 8px; list-style: none; margin: 0; padding: 0 24px; overflow-x: auto; scrollbar-width: none; }
+  nav.menu li a { display: flex; align-items: center; gap: 8px; color: #fff; font-weight: 500; font-size: 15px; padding: 11px 6px; white-space: nowrap; }
+  nav.menu svg { flex: none; opacity: .95; }
+
+  main { padding: 16px 0 120px; }
+  .grid { display: grid; grid-template-columns: 1.65fr 1fr; gap: 16px; }
+  .hero { background: #fff; border: 1px solid var(--border); border-radius: 16px; min-height: 340px; display: grid; place-items: center; color: var(--muted); position: relative; overflow: hidden; }
+  .hero .ph { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; padding: 24px; }
+  .hero .ph strong { color: var(--navy); font-size: 22px; font-weight: 700; }
+  .hero .dots { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; }
+  .hero .dots i { width: 6px; height: 6px; border-radius: 50%; background: #CBD5E1; }
+  .hero .dots i:first-child { width: 18px; border-radius: 999px; background: var(--navy); }
+
+  .news-tabs { display: flex; justify-content: space-around; border-bottom: 1px solid var(--border); margin-bottom: 10px; }
+  .news-tabs span { padding: 8px 4px; font-size: 14px; font-weight: 500; color: var(--muted); }
+  .news-tabs span.on { color: var(--navy); border-bottom: 2px solid var(--navy); margin-bottom: -1px; }
+  .ann { display: flex; gap: 12px; background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 10px; margin-bottom: 8px; }
+  .ann .th { width: 72px; height: 64px; border-radius: 6px; background: #F1F5F9; flex: none; display: grid; place-items: center; }
+  .ann .th img { width: 48px; opacity: .9; }
+  .ann .tx { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .ann time { font-size: 12px; color: var(--muted); }
+  .ann h3 { margin: 4px 0; font-size: 14px; font-weight: 500; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .ann a { align-self: flex-end; font-size: 12.5px; color: var(--navy); font-weight: 500; margin-top: auto; }
+  .all { display: block; text-align: center; font-size: 13.5px; color: var(--navy); font-weight: 500; margin-top: 6px; }
+
+  .tiles { margin-top: 20px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+  .tile { background: #fff; border: 1px solid var(--border); border-radius: 10px; height: 112px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; font-size: 13.5px; font-weight: 500; text-align: center; padding: 8px; }
+  .tile svg { color: var(--navy); }
+
+  .proto-note { margin-top: 28px; font-size: 12.5px; color: var(--muted); text-align: center; }
+
+  @media (max-width: 960px) {
+    .grid { grid-template-columns: 1fr; }
+    .tiles { grid-template-columns: repeat(3, 1fr); }
+    nav.menu ul { justify-content: flex-start; gap: 18px; padding: 0 16px; }
+  }
+  @media (max-width: 640px) {
+    .search { display: none; }
+    .logo { height: 48px; }
+    .avatar { width: 44px; height: 44px; }
+    .hero { min-height: 220px; }
+    .tiles { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="bar">
+      <img class="logo" src="assets/ismer-logo.png" alt="İşmer">
+      <input class="search" type="search" placeholder="Arama" aria-label="Portalda ara">
+      <div class="spacer"></div>
+      <span class="bell" aria-label="14 bildirim">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        <b>14</b>
+      </span>
+      <span class="avatar" aria-label="Profil">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+      </span>
+    </div>
+    <nav class="menu" aria-label="Ana menü">
+      <ul>
+        <li><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V21H3z"/></svg>Ana Sayfa</a></li>
+        <li><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 7h2M14 7h2M8 11h2M14 11h2M10 21v-4h4v4"/></svg>Kurumsal ▾</a></li>
+        <li><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg>Bölümlerimiz ▾</a></li>
+        <li><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20a6 6 0 0 1 12 0M14 20a4 4 0 0 1 7-2.6"/></svg>İnsan Kaynakları ▾</a></li>
+        <li><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6z"/><path d="M12 8v4M12 16h.01"/></svg>İSG ▾</a></li>
+        <li><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.7M12 17h.01"/></svg>Sıkça Sorulan Sorular</a></li>
+        <li><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>Çalışanın Sesi ▾</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="grid">
+    <section class="hero" aria-label="Öne çıkanlar">
+      <div class="ph"><strong>Portal ana sayfa içeriği</strong><span>Kampanya ve duyuru görselleri burada yer alır.</span></div>
+      <div class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+    </section>
+    <section aria-label="Duyurular">
+      <div class="news-tabs"><span class="on">Duyurular</span><span>Kampanyalar</span><span>Haberler</span></div>
+      <article class="ann"><div class="th"><img src="assets/ismer-logo.png" alt=""></div><div class="tx"><time>2026-10-06</time><h3>Acıbadem Bayındır Etkinliği Hakkında Bilgilendirme</h3><a href="#">Detayı Görüntüle</a></div></article>
+      <article class="ann"><div class="th"><img src="assets/ismer-logo.png" alt=""></div><div class="tx"><time>2026-10-06</time><h3>Açık Pozisyonlar-Hizmetli Personel 87</h3><a href="#">Detayı Görüntüle</a></div></article>
+      <article class="ann"><div class="th"><img src="assets/ismer-logo.png" alt=""></div><div class="tx"><time>2026-10-06</time><h3>Kurumsal E-Posta (Zimbra) Kullanıcıları İçin | SMS Doğrulama</h3><a href="#">Detayı Görüntüle</a></div></article>
+      <a class="all" href="#">Tüm Duyuruları Görüntüle ↗</a>
+    </section>
+  </div>
+
+  <div class="tiles">
+    <a class="tile" href="#"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 3v8a2 2 0 0 0 4 0V3M6 11v10M18 21V3c-2 1-3 4-3 7h3"/></svg>Yemek Menüsü</a>
+    <a class="tile" href="#"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>İzin Görüntüleme</a>
+    <a class="tile" href="#"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Acil Numaralar</a>
+    <a class="tile" href="#"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg>Bir Fikrim Var</a>
+    <a class="tile" href="#"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="10" r="2.5"/><path d="M8.5 17a3.5 3.5 0 0 1 7 0"/></svg>Telefon Rehberi</a>
+    <a class="tile" href="#"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/></svg>E-Kart</a>
+  </div>
+
+  <p class="proto-note">Prototip: portal ana sayfası temsilidir. Gerçek portalda yalnızca sağ alttaki Pusula butonu eklenir.</p>
+</main>
+
+<script src="embed.js" defer></script>
+</body>
+</html>
