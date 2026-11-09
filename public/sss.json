@@ -1,242 +1,888 @@
-[
-  {
-    "id": 1,
-    "kategori": "Sağlık Sigortası / Çocuğum Oldu",
-    "soru": "Çocuğum sigortaya ne zaman dahil olur?",
-    "cevap": "Doğumdan 1 ay sonra ve bir sonraki sigorta yenileme döneminde dahil olur. Yenileme dönemleri Tamamlayıcı Sağlık Sigortası (TSS) için 15 Ekim, Özel Sağlık Sigortası (ÖSS) için 1 Ocak tarihleridir."
-  },
-  {
-    "id": 2,
-    "kategori": "Sağlık Sigortası / Çocuğum Oldu",
-    "soru": "Hangi evraklar gerekiyor?",
-    "cevap": "Doğum raporu, bebek epikriz raporu (yoksa bebeğe ait durum bildirim raporu) ve bebeğin kimlik belgesi gerekmektedir."
-  },
-  {
-    "id": 3,
-    "kategori": "Sağlık Sigortası / Çocuğum Oldu",
-    "soru": "Sigorta doğumdan geriye dönük geçerli mi?",
-    "cevap": "Hayır, geriye dönük geçerli değildir."
-  },
-  {
-    "id": 4,
-    "kategori": "Sağlık Sigortası / Çocuğum Oldu",
-    "soru": "Eşimi de dahil edebilir miyim?",
-    "cevap": "Hayır, dahil edemezsiniz."
-  },
-  {
-    "id": 5,
-    "kategori": "Sağlık Sigortası / Çocuğum Oldu",
-    "soru": "Özel hastanelerde geçerli mi?",
-    "cevap": "Hangi özel hastanelerde geçerli olduğunu Sağlığım Cepte uygulaması üzerinden kontrol edebilirsiniz."
-  },
-  {
-    "id": 6,
-    "kategori": "Sağlık Sigortası / Çocuğum Oldu",
-    "soru": "Sigorta kapsamını nereden görebilirim?",
-    "cevap": "Sigorta kapsam detaylarına yine Sağlığım Cepte uygulaması üzerinden ulaşabilirsiniz."
-  },
-  {
-    "id": 7,
-    "kategori": "Sağlık Sigortası / Sağlık Sigortam Yapıldı mı?",
-    "soru": "Poliçem ne zaman aktif olur?",
-    "cevap": "İşe başlama tarihinizden itibaren 2 aylık deneme süresi tamamlandıktan sonra aktif olur."
-  },
-  {
-    "id": 8,
-    "kategori": "Sağlık Sigortası / Sağlık Sigortam Yapıldı mı?",
-    "soru": "Hangi hastanelerde geçerli?",
-    "cevap": "Anlaşmalı hastanelerin güncel listesini Sağlığım Cepte uygulaması üzerinden görüntüleyebilirsiniz."
-  },
-  {
-    "id": 9,
-    "kategori": "Sağlık Sigortası / Sağlık Sigortam Yapıldı mı?",
-    "soru": "Provizyon alamazsam ne yapmalıyım?",
-    "cevap": ""
-  },
-  {
-    "id": 10,
-    "kategori": "Sağlık Sigortası / Sağlık Sigortam Yapıldı mı?",
-    "soru": "Sigorta kartı gerekiyor mu?",
-    "cevap": "Hayır, fiziksel karta gerek yoktur; T.C. Kimlik numaranız yeterlidir."
-  },
-  {
-    "id": 11,
-    "kategori": "Sağlık Sigortası / Sağlık Sigortam Yapıldı mı?",
-    "soru": "Teminatlar nelerdir?",
-    "cevap": "Teminat tablosunu Sağlığım Cepte uygulamasından inceleyebilirsiniz."
-  },
-  {
-    "id": 12,
-    "kategori": "Sağlık Sigortası / Sağlık Sigortam Yapıldı mı?",
-    "soru": "Yıllık limitim var mı?",
-    "cevap": "Özel Sağlık Sigortası'nda (ÖSS) brüt tutar üzerinden limit uygulanırken; Tamamlayıcı Sağlık Sigortası'nda (TSS) ameliyat ve yatarak tedavi kuralları geçerlidir."
-  },
-  {
-    "id": 13,
-    "kategori": "İzinler / İzin Hakları",
-    "soru": "Doğum izni kaç gün?",
-    "cevap": "Çalışan kadınların doğumdan önce sekiz hafta ve doğumdan sonra sekiz hafta olmak üzere toplam on altı haftalık analık izni süresi bulunmaktadır."
-  },
-  {
-    "id": 14,
-    "kategori": "İzinler / İzin Hakları",
-    "soru": "Cenazem var, kaç gün izin kullanabilirim?",
-    "cevap": "Eşin, çocuğun ölümü halinde 5 ardışık takvim günü, kendisinin veya eşinin anne, baba veya kardeşlerinden birinin ölümü halinde 3 ardışık takvim günü, ikinci dereceden yakının ölümü halinde 1 gün mazeret izin hakkı bulunmaktadır."
-  },
-  {
-    "id": 15,
-    "kategori": "İzinler / İzin Hakları",
-    "soru": "Evimi taşıyacağım, izin kullanabilir miyim? Taşınma izni kaç gün?",
-    "cevap": "Ev değiştirme/taşınma halinde 1 gün mazeret izin hakkı bulunmaktadır."
-  },
-  {
-    "id": 16,
-    "kategori": "İzinler / İzin Yönetim Sistemi",
-    "soru": "Kalan yıllık izin gün sayısını nasıl öğrenebilirim?",
-    "cevap": "https://iys.ismer.com.tr/pdh adresi ile ulaşılan İzin Yönetim Sistemi üzerinden kalan izin gün sayısını görüntüleyebilirsiniz."
-  },
-  {
-    "id": 17,
-    "kategori": "İzinler / İzin Yönetim Sistemi",
-    "soru": "İşmer çalışanı için izin ve istirahat raporu girişi yapmak istiyorum, nasıl bir yol izleyebilirim?",
-    "cevap": "İzin ve rapor girişleri için https://iys.ismer.com.tr/pdh adresinden İzin Yönetim Sistemi üzerinden izin formu ve istirahat raporunun görüntüsünü ekleyerek giriş yapabilirsiniz.\nŞifre işlemi için: \"Şifremi unuttum\" kısmına tıklarsanız kullanıcı adı ve şifreniz şube mailinize aktarılacaktır."
-  },
-  {
-    "id": 18,
-    "kategori": "İzinler / İzin Yönetim Sistemi",
-    "soru": "İşmer çalışanı için izin girişi yapmak istiyorum, izin formuna nereden ulaşabilirim?",
-    "cevap": "Sistemde izin girişi yaparken izin türü ve izin tarihleri seçildiğinde sistem izin formunu otomatik olarak üretmektedir."
-  },
-  {
-    "id": 19,
-    "kategori": "İzinler / İzin Yönetim Sistemi",
-    "soru": "İşmer çalışanı için girişini yaptığım iznin iptal edilmesini istiyorum, nasıl iptal edebilirim?",
-    "cevap": "İzin iptali talebinizi insan.kaynaklari@ismer.com.tr adresimize e-posta yoluyla iletebilirsiniz. İzin iptali gerçekleştirildiğinde tarafınıza bilgi verilecektir."
-  },
-  {
-    "id": 20,
-    "kategori": "Maaş ve Bordro",
-    "soru": "Bordroma nasıl ulaşabilirim?",
-    "cevap": "Bordrolar her ay çalışanlara maaş ödendikten sonra mail olarak gönderilmektedir. Şirket mail adresine giriş yaparak ulaşabilirsiniz."
-  },
-  {
-    "id": 21,
-    "kategori": "Maaş ve Bordro",
-    "soru": "Brüt ücret elime geçecek ücret midir?",
-    "cevap": "Hayır, çalışana ödenen ücretin kesinti ve vergiler yapılmadan olan haline brüt ücret denilmektedir."
-  },
-  {
-    "id": 22,
-    "kategori": "Maaş ve Bordro",
-    "soru": "Zorunlu BES iptalini nasıl gerçekleştirebilirim?",
-    "cevap": "Aşağıdaki yolları kullanarak Zorunlu BES'inizi iptal edebilirsiniz:\n- Anadolu Hayat Emeklilik web sitesi aracılığıyla.\n- Anadolu Hayat Emeklilik mobil uygulaması aracılığıyla.\n- \"CAYMA TC kimlik no\" yazıp 5755'e SMS göndererek.\n- 444 55 00 nolu Anadolu Hayat Emeklilik Bilgi Hattını arayarak."
-  },
-  {
-    "id": 23,
-    "kategori": "Maaş ve Bordro",
-    "soru": "Hizmet Hatıraları Ödülü hak edişi için gereken koşullar nelerdir?",
-    "cevap": "Şirketimiz bünyesinde 10-15. ve 20. çalışma yılını dolduran ekip arkadaşlarımıza hizmet hatıraları ödülü takdim edilir."
-  },
-  {
-    "id": 24,
-    "kategori": "Yemek ve Ulaşım Kartı",
-    "soru": "Yemek kartının kaybedilmesi veya çalınması durumunda nasıl bir yol izleyebilirim?",
-    "cevap": "Sodexo müşteri hizmetleri ile görüşerek ya da Sodexo mobil uygulama üzerinden kart kayıp/çalıntı olarak bildirilerek iptal edilmelidir.\nKartın iptal olduğuna dair insan.kaynaklari@ismer.com.tr adresine bilgi verilmesi durumunda tarafımızca da kart iptal edilerek, yeni kart siparişi verilebilmektedir. İptal edilen kartın içerisindeki bakiye yeni karta aktarılmaktadır."
-  },
-  {
-    "id": 25,
-    "kategori": "Yemek ve Ulaşım Kartı",
-    "soru": "İstanbul kartımı kaybettim ne yapmalıyım?",
-    "cevap": "Yeni bir kart alıp, kart görüntü ve bilgilerini İşmer İnsan Kaynakları Bölümü ile paylaşabilirsiniz."
-  },
-  {
-    "id": 26,
-    "kategori": "Çalışma Hayatı",
-    "soru": "İşmer A.Ş. çalışanlarının genel çalışma saati nedir?",
-    "cevap": "İşmer çalışanlarının genel çalışma saatleri 08:00-18:00'dir. Vardiya düzeniyle çalışan ekiplerimiz de bulunmaktadır."
-  },
-  {
-    "id": 27,
-    "kategori": "Çalışma Hayatı",
-    "soru": "Kıyafet sorunumu kime iletebilirim?",
-    "cevap": "İşmer Operasyon Bölümü ile iletişime geçebilirsiniz (operasyon@ismer.com.tr)."
-  },
-  {
-    "id": 28,
-    "kategori": "Çalışma Hayatı",
-    "soru": "Tayin talebimi kime iletebilirim?",
-    "cevap": "El yazınızla doldurduğunuz dilekçenizi sinerji veya mail yoluyla İşmer İnsan Kaynakları Bölümüne iletebilirsiniz."
-  },
-  {
-    "id": 29,
-    "kategori": "Çalışma Hayatı",
-    "soru": "Şubem kapanacak ne yapmalıyım?",
-    "cevap": "Şube birleştirme ve kapanmalarında personelden ilave bir talebimiz bulunmamaktadır. İşlemler Şube ile yürütülüp tebliğler personele iletilmektedir."
-  },
-  {
-    "id": 30,
-    "kategori": "Çalışma Hayatı",
-    "soru": "Emekliyim ya da emekli olursam çalışabilir miyim?",
-    "cevap": "Şirket politikamız gereği emeklilik sonrası tekrar çalışmak mümkün değildir."
-  },
-  {
-    "id": 31,
-    "kategori": "E-posta ve Şifre",
-    "soru": "İşmer çalışanıyım. Şirket e-posta adresine nasıl giriş yapabilirim?",
-    "cevap": "Şirketimizin web sitesinde yer alan Kurumsal Uygulamalar başlığı altındaki web mail ekranını açarak, sicil numarası ve şifre ile mail adresine giriş yapılabilmektedir."
-  },
-  {
-    "id": 32,
-    "kategori": "E-posta ve Şifre",
-    "soru": "Şirket e-posta adresimin şifresini unuttum, nasıl giriş yapacağım?",
-    "cevap": "Şirket e-postası erişimi için şifre ile ilgili problem yaşanması halinde Web Mail alanında \"Şifremi Unuttum\" butonuna tıklayarak ya da https://iys.ismer.com.tr/yenisifre adresi üzerinden şifrenizi yenileyebilirsiniz.\nE-posta ile ilgili diğer sorunlar için Teknoloji ve İş Geliştirme Bölümümüze ulaşabilirsiniz."
-  },
-  {
-    "id": 33,
-    "kategori": "E-posta ve Şifre",
-    "soru": "Mobil telefonum ile e-postalarıma ulaşabilir miyim?",
-    "cevap": "E-posta kullanımı için işe giriş sırasında tarafınız ile paylaşılan E-posta Kullanım Kılavuzu'ndan destek alabilirsiniz. Telefonunuza e-posta kurulumu için Teknoloji ve İş Geliştirme Ekibimiz ile bağlantıya geçebilirsiniz."
-  },
-  {
-    "id": 34,
-    "kategori": "E-posta ve Şifre",
-    "soru": "Yapmış olduğunuz duyuruları şahsi e-posta adresimize gönderemez misiniz?",
-    "cevap": "Şirketimizce yapılan duyurular, iç iletişim gönderileri ve maaş bordroları yalnızca şirket e-posta adreslerine yönlendirilebilmektedir. Şirket içi yazışmalarda şahsi e-posta adresleri kullanılmamalıdır."
-  },
-  {
-    "id": 35,
-    "kategori": "Şube İşlemleri",
-    "soru": "İzine ayrılacak olan çalışanın yerine ikame personel talebim bulunmaktadır, nasıl bir yol izleyebilirim?",
-    "cevap": "https://iys.ismer.com.tr/pdh sistemimiz üzerinden izin girişi yaparken \"İkame Personel İstiyorum\" seçeneğini işaretlemeniz durumunda Operasyon Bölümümüz tarafından çalışan izin süresi boyunca yerine çalışacak ikame personel planlaması sağlanacaktır."
-  },
-  {
-    "id": 36,
-    "kategori": "Şube İşlemleri",
-    "soru": "İkame personel ile ilgili sorularım var, kiminle görüşebilirim?",
-    "cevap": "İkame personel ile ilgili sorularınızı operasyon@ismer.com.tr adresine e-posta yoluyla iletebilirsiniz."
-  },
-  {
-    "id": 37,
-    "kategori": "Şube İşlemleri",
-    "soru": "İşmer çalışanı için fazla mesai girişi yapmak istiyorum, nasıl bir yol izleyebilirim?",
-    "cevap": "Her ay şubelere denkleştirme tablosu linki mail olarak yönlendirilmektedir. Denkleştirme tablosuna şube yetkilisi tarafından çalışanın fazla mesai saatleri için giriş yaptıktan sonra İnsan Kaynakları Bölümüne onaya gönderilmesi gerekmektedir.\nOnay işlemi sonrasında işlem tamamlanmış olacaktır."
-  },
-  {
-    "id": 38,
-    "kategori": "Şube İşlemleri",
-    "soru": "Yeni personel talebi süreci ile ilgili görüşmek istiyorum, kiminle görüşebilirim?",
-    "cevap": "İnsan Kaynakları İşe Alım Birimimize ikisealim@ismer.com.tr adresi üzerinden e-posta yolu ile ulaşabilirsiniz."
-  },
-  {
-    "id": 39,
-    "kategori": "Şirket ve Başvuru",
-    "soru": "Şirketimizin kurumsal web sitesine hangi bağlantı üzerinden ulaşabilirim?",
-    "cevap": "Şirketimizin kurumsal web sitesine www.ismer.com.tr bağlantısı üzerinden ulaşılabilir."
-  },
-  {
-    "id": 40,
-    "kategori": "Şirket ve Başvuru",
-    "soru": "Şirketimize iş başvurusu yapmak istenirse, nasıl başvuru yapılabilir?",
-    "cevap": "info@ismer.com.tr veya ikisealim@ismer.com.tr adreslerine mail ile talebinizi iletilerek başvuru yapılabilir. Şirket internet sitemiz üzerinden veya Şubelerimizde \"İş Başvuru Formu\" doldurarak iş başvuruları gerçekleştirilebilir."
-  }
-]
+{
+  "sorular": [
+    {
+      "id": 1,
+      "kategori": "Sağlık Sigortası / Çocuğum Oldu",
+      "soru": "Çocuğum sigortaya ne zaman dahil olur?",
+      "cevap": "Doğumdan 1 ay sonra ve bir sonraki sigorta yenileme döneminde dahil olur. Yenileme dönemleri Tamamlayıcı Sağlık Sigortası (TSS) için 15 Ekim, Özel Sağlık Sigortası (ÖSS) için 1 Ocak tarihleridir.",
+      "alternatifler": [
+        "Bebeğim doğdu, sigortaya ne zaman girer?",
+        "Çocuğumu sağlık sigortasına ekletmek istiyorum"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 2,
+      "kategori": "Sağlık Sigortası / Çocuğum Oldu",
+      "soru": "Hangi evraklar gerekiyor?",
+      "cevap": "Doğum raporu, bebek epikriz raporu (yoksa bebeğe ait durum bildirim raporu) ve bebeğin kimlik belgesi gerekmektedir.",
+      "alternatifler": [
+        "Bebeği sigortaya eklemek için hangi belgeler lazım?",
+        "Çocuğun sigortası için gereken evraklar"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 3,
+      "kategori": "Sağlık Sigortası / Çocuğum Oldu",
+      "soru": "Sigorta doğumdan geriye dönük geçerli mi?",
+      "cevap": "Hayır, geriye dönük geçerli değildir.",
+      "alternatifler": [
+        "Bebeğim doğduğu günden itibaren sigortalı sayılır mı?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 4,
+      "kategori": "Sağlık Sigortası / Çocuğum Oldu",
+      "soru": "Eşimi de dahil edebilir miyim?",
+      "cevap": "Hayır, dahil edemezsiniz.",
+      "alternatifler": [
+        "Eşimi sigortaya ekleyebilir miyim?",
+        "Karımı ya da kocamı sağlık sigortasına ekletebilir miyim?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 5,
+      "kategori": "Sağlık Sigortası / Çocuğum Oldu",
+      "soru": "Özel hastanelerde geçerli mi?",
+      "cevap": "Hangi özel hastanelerde geçerli olduğunu Sağlığım Cepte uygulaması üzerinden kontrol edebilirsiniz.",
+      "alternatifler": [
+        "Çocuğumun sigortası özel hastanede geçer mi?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 6,
+      "kategori": "Sağlık Sigortası / Çocuğum Oldu",
+      "soru": "Sigorta kapsamını nereden görebilirim?",
+      "cevap": "Sigorta kapsam detaylarına yine Sağlığım Cepte uygulaması üzerinden ulaşabilirsiniz.",
+      "alternatifler": [
+        "Çocuğumun sigortası neleri kapsıyor?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 7,
+      "kategori": "Sağlık Sigortası / Sağlık Sigortam Yapıldı mı?",
+      "soru": "Poliçem ne zaman aktif olur?",
+      "cevap": "İşe başlama tarihinizden itibaren 2 aylık deneme süresi tamamlandıktan sonra aktif olur.",
+      "alternatifler": [
+        "Sağlık sigortam ne zaman başlar?",
+        "İşe yeni girdim, sigortam yapıldı mı?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 8,
+      "kategori": "Sağlık Sigortası / Sağlık Sigortam Yapıldı mı?",
+      "soru": "Hangi hastanelerde geçerli?",
+      "cevap": "Anlaşmalı hastanelerin güncel listesini Sağlığım Cepte uygulaması üzerinden görüntüleyebilirsiniz.",
+      "alternatifler": [
+        "Anlaşmalı hastaneler hangileri?",
+        "Sigortam hangi hastanede geçiyor?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 9,
+      "kategori": "Sağlık Sigortası / Sağlık Sigortam Yapıldı mı?",
+      "soru": "Provizyon alamazsam ne yapmalıyım?",
+      "cevap": "",
+      "alternatifler": [
+        "Hastanede provizyon alamadım, ne yapayım?",
+        "Hastane sigortamı kabul etmedi"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 10,
+      "kategori": "Sağlık Sigortası / Sağlık Sigortam Yapıldı mı?",
+      "soru": "Sigorta kartı gerekiyor mu?",
+      "cevap": "Hayır, fiziksel karta gerek yoktur; T.C. Kimlik numaranız yeterlidir.",
+      "alternatifler": [
+        "Hastaneye giderken sigorta kartı lazım mı?",
+        "Sigorta kartım yok, ne yapmalıyım?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 11,
+      "kategori": "Sağlık Sigortası / Sağlık Sigortam Yapıldı mı?",
+      "soru": "Teminatlar nelerdir?",
+      "cevap": "Teminat tablosunu Sağlığım Cepte uygulamasından inceleyebilirsiniz.",
+      "alternatifler": [
+        "Sigortam neleri karşılıyor?",
+        "Teminat tablosuna nereden bakarım?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 12,
+      "kategori": "Sağlık Sigortası / Sağlık Sigortam Yapıldı mı?",
+      "soru": "Yıllık limitim var mı?",
+      "cevap": "Özel Sağlık Sigortası'nda (ÖSS) brüt tutar üzerinden limit uygulanırken; Tamamlayıcı Sağlık Sigortası'nda (TSS) ameliyat ve yatarak tedavi kuralları geçerlidir.",
+      "alternatifler": [
+        "Sigortanın yıllık limiti ne kadar?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 13,
+      "kategori": "İzinler / İzin Hakları",
+      "soru": "Doğum izni kaç gün?",
+      "cevap": "Çalışan kadınların doğumdan önce sekiz hafta ve doğumdan sonra sekiz hafta olmak üzere toplam on altı haftalık analık izni süresi bulunmaktadır.",
+      "alternatifler": [
+        "Hamileyim, doğum izni kaç hafta?",
+        "Analık izni ne kadar?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 14,
+      "kategori": "İzinler / İzin Hakları",
+      "soru": "Cenazem var, kaç gün izin kullanabilirim?",
+      "cevap": "Eşin, çocuğun ölümü halinde 5 ardışık takvim günü, kendisinin veya eşinin anne, baba veya kardeşlerinden birinin ölümü halinde 3 ardışık takvim günü, ikinci dereceden yakının ölümü halinde 1 gün mazeret izin hakkı bulunmaktadır.",
+      "alternatifler": [
+        "Annem vefat etti, kaç gün izin var?",
+        "Babamı kaybettim, izin alabilir miyim?",
+        "Yakınım öldü, ölüm izni kaç gün?"
+      ],
+      "giris": "Başınız sağ olsun."
+    },
+    {
+      "id": 15,
+      "kategori": "İzinler / İzin Hakları",
+      "soru": "Evimi taşıyacağım, izin kullanabilir miyim? Taşınma izni kaç gün?",
+      "cevap": "Ev değiştirme/taşınma halinde 1 gün mazeret izin hakkı bulunmaktadır.",
+      "alternatifler": [
+        "Ev taşıyacağım, izin alabilir miyim?",
+        "Taşınma izni var mı?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 16,
+      "kategori": "İzinler / İzin Yönetim Sistemi",
+      "soru": "Kalan yıllık izin gün sayısını nasıl öğrenebilirim?",
+      "cevap": "https://iys.ismer.com.tr/pdh adresi ile ulaşılan İzin Yönetim Sistemi üzerinden kalan izin gün sayısını görüntüleyebilirsiniz.",
+      "alternatifler": [
+        "Kaç gün iznim kaldı?",
+        "Yıllık izin günümü nereden görebilirim?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 17,
+      "kategori": "İzinler / İzin Yönetim Sistemi",
+      "soru": "İşmer çalışanı için izin ve istirahat raporu girişi yapmak istiyorum, nasıl bir yol izleyebilirim?",
+      "cevap": "İzin ve rapor girişleri için https://iys.ismer.com.tr/pdh adresinden İzin Yönetim Sistemi üzerinden izin formu ve istirahat raporunun görüntüsünü ekleyerek giriş yapabilirsiniz.\nŞifre işlemi için: \"Şifremi unuttum\" kısmına tıklarsanız kullanıcı adı ve şifreniz şube mailinize aktarılacaktır.",
+      "alternatifler": [
+        "İstirahat raporunu sisteme nasıl girerim?",
+        "Personelin raporunu nereye yükleyeceğim?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 18,
+      "kategori": "İzinler / İzin Yönetim Sistemi",
+      "soru": "İşmer çalışanı için izin girişi yapmak istiyorum, izin formuna nereden ulaşabilirim?",
+      "cevap": "Sistemde izin girişi yaparken izin türü ve izin tarihleri seçildiğinde sistem izin formunu otomatik olarak üretmektedir.",
+      "alternatifler": [
+        "İzin formu nerede?",
+        "İzin dilekçesini nereden alırım?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 19,
+      "kategori": "İzinler / İzin Yönetim Sistemi",
+      "soru": "İşmer çalışanı için girişini yaptığım iznin iptal edilmesini istiyorum, nasıl iptal edebilirim?",
+      "cevap": "İzin iptali talebinizi insan.kaynaklari@ismer.com.tr adresimize e-posta yoluyla iletebilirsiniz. İzin iptali gerçekleştirildiğinde tarafınıza bilgi verilecektir.",
+      "alternatifler": [
+        "Girdiğim izni iptal etmek istiyorum",
+        "İzin iptali nasıl yapılır?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 20,
+      "kategori": "Maaş ve Bordro",
+      "soru": "Bordroma nasıl ulaşabilirim?",
+      "cevap": "Bordrolar her ay çalışanlara maaş ödendikten sonra mail olarak gönderilmektedir. Şirket mail adresine giriş yaparak ulaşabilirsiniz.",
+      "alternatifler": [
+        "Maaş bordromu nereden görürüm?",
+        "Bordrom gelmedi"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 21,
+      "kategori": "Maaş ve Bordro",
+      "soru": "Brüt ücret elime geçecek ücret midir?",
+      "cevap": "Hayır, çalışana ödenen ücretin kesinti ve vergiler yapılmadan olan haline brüt ücret denilmektedir.",
+      "alternatifler": [
+        "Brüt maaş ile net maaş farkı nedir?",
+        "Brüt ücret ele geçen para mı?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 22,
+      "kategori": "Maaş ve Bordro",
+      "soru": "Zorunlu BES iptalini nasıl gerçekleştirebilirim?",
+      "cevap": "Aşağıdaki yolları kullanarak Zorunlu BES'inizi iptal edebilirsiniz:\n- Anadolu Hayat Emeklilik web sitesi aracılığıyla.\n- Anadolu Hayat Emeklilik mobil uygulaması aracılığıyla.\n- \"CAYMA TC kimlik no\" yazıp 5755'e SMS göndererek.\n- 444 55 00 nolu Anadolu Hayat Emeklilik Bilgi Hattını arayarak.",
+      "alternatifler": [
+        "Zorunlu BES'ten nasıl çıkarım?",
+        "Bireysel emeklilik kesintisini durdurmak istiyorum"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 23,
+      "kategori": "Maaş ve Bordro",
+      "soru": "Hizmet Hatıraları Ödülü hak edişi için gereken koşullar nelerdir?",
+      "cevap": "Şirketimiz bünyesinde 10-15. ve 20. çalışma yılını dolduran ekip arkadaşlarımıza hizmet hatıraları ödülü takdim edilir.",
+      "alternatifler": [
+        "Kaç yıl çalışınca hizmet ödülü verilir?",
+        "10 yıl ödülü var mı?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 24,
+      "kategori": "Yemek ve Ulaşım Kartı",
+      "soru": "Yemek kartının kaybedilmesi veya çalınması durumunda nasıl bir yol izleyebilirim?",
+      "cevap": "Sodexo müşteri hizmetleri ile görüşerek ya da Sodexo mobil uygulama üzerinden kart kayıp/çalıntı olarak bildirilerek iptal edilmelidir.\nKartın iptal olduğuna dair insan.kaynaklari@ismer.com.tr adresine bilgi verilmesi durumunda tarafımızca da kart iptal edilerek, yeni kart siparişi verilebilmektedir. İptal edilen kartın içerisindeki bakiye yeni karta aktarılmaktadır.",
+      "alternatifler": [
+        "Yemek kartımı kaybettim",
+        "Sodexo kartım çalındı",
+        "Yemek kartım kayboldu, ne yapmalıyım?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 25,
+      "kategori": "Yemek ve Ulaşım Kartı",
+      "soru": "İstanbul kartımı kaybettim ne yapmalıyım?",
+      "cevap": "Yeni bir kart alıp, kart görüntü ve bilgilerini İşmer İnsan Kaynakları Bölümü ile paylaşabilirsiniz.",
+      "alternatifler": [
+        "İstanbulkart kayboldu",
+        "Ulaşım kartımı kaybettim"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 26,
+      "kategori": "Çalışma Hayatı",
+      "soru": "İşmer A.Ş. çalışanlarının genel çalışma saati nedir?",
+      "cevap": "İşmer çalışanlarının genel çalışma saatleri 08:00-18:00'dir. Vardiya düzeniyle çalışan ekiplerimiz de bulunmaktadır.",
+      "alternatifler": [
+        "Mesai saatleri kaçta?",
+        "İş kaçta başlıyor, kaçta bitiyor?",
+        "Vardiya saatleri nasıl?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 27,
+      "kategori": "Çalışma Hayatı",
+      "soru": "Kıyafet sorunumu kime iletebilirim?",
+      "cevap": "İşmer Operasyon Bölümü ile iletişime geçebilirsiniz (operasyon@ismer.com.tr).",
+      "alternatifler": [
+        "Kıyafetim yırtıldı, kime söylemeliyim?",
+        "Yeni iş kıyafeti istiyorum",
+        "Üniformam küçük geldi"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 28,
+      "kategori": "Çalışma Hayatı",
+      "soru": "Tayin talebimi kime iletebilirim?",
+      "cevap": "El yazınızla doldurduğunuz dilekçenizi sinerji veya mail yoluyla İşmer İnsan Kaynakları Bölümüne iletebilirsiniz.",
+      "alternatifler": [
+        "Başka şubeye geçmek istiyorum",
+        "Nakil talebi nasıl yapılır?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 29,
+      "kategori": "Çalışma Hayatı",
+      "soru": "Şubem kapanacak ne yapmalıyım?",
+      "cevap": "Şube birleştirme ve kapanmalarında personelden ilave bir talebimiz bulunmamaktadır. İşlemler Şube ile yürütülüp tebliğler personele iletilmektedir.",
+      "alternatifler": [
+        "Çalıştığım şube kapanıyor, ne olacak?",
+        "Şubeler birleşiyor, ne yapmam gerekiyor?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 30,
+      "kategori": "Çalışma Hayatı",
+      "soru": "Emekliyim ya da emekli olursam çalışabilir miyim?",
+      "cevap": "Şirket politikamız gereği emeklilik sonrası tekrar çalışmak mümkün değildir.",
+      "alternatifler": [
+        "Emekli olunca çalışmaya devam edebilir miyim?",
+        "Emekliyim, işe girebilir miyim?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 31,
+      "kategori": "E-posta ve Şifre",
+      "soru": "İşmer çalışanıyım. Şirket e-posta adresine nasıl giriş yapabilirim?",
+      "cevap": "Şirketimizin web sitesinde yer alan Kurumsal Uygulamalar başlığı altındaki web mail ekranını açarak, sicil numarası ve şifre ile mail adresine giriş yapılabilmektedir.",
+      "alternatifler": [
+        "Şirket mailime nasıl girerim?",
+        "Webmail girişi nasıl yapılır?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 32,
+      "kategori": "E-posta ve Şifre",
+      "soru": "Şirket e-posta adresimin şifresini unuttum, nasıl giriş yapacağım?",
+      "cevap": "Şirket e-postası erişimi için şifre ile ilgili problem yaşanması halinde Web Mail alanında \"Şifremi Unuttum\" butonuna tıklayarak ya da https://iys.ismer.com.tr/yenisifre adresi üzerinden şifrenizi yenileyebilirsiniz.\nE-posta ile ilgili diğer sorunlar için Teknoloji ve İş Geliştirme Bölümümüze ulaşabilirsiniz.",
+      "alternatifler": [
+        "Mail şifremi unuttum",
+        "E-posta şifremi nasıl yenilerim?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 33,
+      "kategori": "E-posta ve Şifre",
+      "soru": "Mobil telefonum ile e-postalarıma ulaşabilir miyim?",
+      "cevap": "E-posta kullanımı için işe giriş sırasında tarafınız ile paylaşılan E-posta Kullanım Kılavuzu'ndan destek alabilirsiniz. Telefonunuza e-posta kurulumu için Teknoloji ve İş Geliştirme Ekibimiz ile bağlantıya geçebilirsiniz.",
+      "alternatifler": [
+        "Telefondan maillerime bakabilir miyim?",
+        "Şirket mailini telefona kurmak istiyorum"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 34,
+      "kategori": "E-posta ve Şifre",
+      "soru": "Yapmış olduğunuz duyuruları şahsi e-posta adresimize gönderemez misiniz?",
+      "cevap": "Şirketimizce yapılan duyurular, iç iletişim gönderileri ve maaş bordroları yalnızca şirket e-posta adreslerine yönlendirilebilmektedir. Şirket içi yazışmalarda şahsi e-posta adresleri kullanılmamalıdır.",
+      "alternatifler": [
+        "Duyurular kendi mail adresime gelebilir mi?",
+        "Şahsi mailime gönderebilir misiniz?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 35,
+      "kategori": "Şube İşlemleri",
+      "soru": "İzine ayrılacak olan çalışanın yerine ikame personel talebim bulunmaktadır, nasıl bir yol izleyebilirim?",
+      "cevap": "https://iys.ismer.com.tr/pdh sistemimiz üzerinden izin girişi yaparken \"İkame Personel İstiyorum\" seçeneğini işaretlemeniz durumunda Operasyon Bölümümüz tarafından çalışan izin süresi boyunca yerine çalışacak ikame personel planlaması sağlanacaktır.",
+      "alternatifler": [
+        "İzne çıkan personelin yerine birini istiyorum",
+        "Yerine bakacak personel talebi"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 36,
+      "kategori": "Şube İşlemleri",
+      "soru": "İkame personel ile ilgili sorularım var, kiminle görüşebilirim?",
+      "cevap": "İkame personel ile ilgili sorularınızı operasyon@ismer.com.tr adresine e-posta yoluyla iletebilirsiniz.",
+      "alternatifler": [
+        "İkame personel hakkında sorularım var, kime yazayım?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 37,
+      "kategori": "Şube İşlemleri",
+      "soru": "İşmer çalışanı için fazla mesai girişi yapmak istiyorum, nasıl bir yol izleyebilirim?",
+      "cevap": "Her ay şubelere denkleştirme tablosu linki mail olarak yönlendirilmektedir. Denkleştirme tablosuna şube yetkilisi tarafından çalışanın fazla mesai saatleri için giriş yaptıktan sonra İnsan Kaynakları Bölümüne onaya gönderilmesi gerekmektedir.\nOnay işlemi sonrasında işlem tamamlanmış olacaktır.",
+      "alternatifler": [
+        "Fazla mesai nasıl girilir?",
+        "Denkleştirme tablosu nedir?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 38,
+      "kategori": "Şube İşlemleri",
+      "soru": "Yeni personel talebi süreci ile ilgili görüşmek istiyorum, kiminle görüşebilirim?",
+      "cevap": "İnsan Kaynakları İşe Alım Birimimize ikisealim@ismer.com.tr adresi üzerinden e-posta yolu ile ulaşabilirsiniz.",
+      "alternatifler": [
+        "Şubeme yeni eleman lazım",
+        "Personel talebi için kiminle görüşmeliyim?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 39,
+      "kategori": "Şirket ve Başvuru",
+      "soru": "Şirketimizin kurumsal web sitesine hangi bağlantı üzerinden ulaşabilirim?",
+      "cevap": "Şirketimizin kurumsal web sitesine www.ismer.com.tr bağlantısı üzerinden ulaşılabilir.",
+      "alternatifler": [
+        "İşmer'in internet sitesi nedir?"
+      ],
+      "giris": ""
+    },
+    {
+      "id": 40,
+      "kategori": "Şirket ve Başvuru",
+      "soru": "Şirketimize iş başvurusu yapmak istenirse, nasıl başvuru yapılabilir?",
+      "cevap": "info@ismer.com.tr veya ikisealim@ismer.com.tr adreslerine mail ile talebinizi iletilerek başvuru yapılabilir. Şirket internet sitemiz üzerinden veya Şubelerimizde \"İş Başvuru Formu\" doldurarak iş başvuruları gerçekleştirilebilir.",
+      "alternatifler": [
+        "İş başvurusu nasıl yapılır?",
+        "Tanıdığım işe girmek istiyor, nereye başvurmalı?"
+      ],
+      "giris": ""
+    }
+  ],
+  "sozluk": [
+    {
+      "kavram": "çocuk",
+      "kelimeler": [
+        "çocuk",
+        "çocuğum",
+        "bebek",
+        "bebeğim",
+        "doğum",
+        "doğdu",
+        "evlat",
+        "oğlum",
+        "kızım",
+        "yenidoğan"
+      ]
+    },
+    {
+      "kavram": "eş",
+      "kelimeler": [
+        "eşim",
+        "eşimi",
+        "eşimin",
+        "karım",
+        "kocam",
+        "hanımım"
+      ]
+    },
+    {
+      "kavram": "hamilelik",
+      "kelimeler": [
+        "hamile",
+        "hamileyim",
+        "gebe",
+        "analık",
+        "lohusa"
+      ]
+    },
+    {
+      "kavram": "hastane",
+      "kelimeler": [
+        "hastane",
+        "klinik",
+        "anlaşmalı",
+        "doktor",
+        "muayene"
+      ]
+    },
+    {
+      "kavram": "belge",
+      "kelimeler": [
+        "evrak",
+        "belge",
+        "doküman",
+        "kağıt"
+      ]
+    },
+    {
+      "kavram": "kapsam",
+      "kelimeler": [
+        "teminat",
+        "kapsam",
+        "kapsıyor",
+        "karşılar",
+        "karşılıyor"
+      ]
+    },
+    {
+      "kavram": "sigorta",
+      "kelimeler": [
+        "sigorta",
+        "sigortam",
+        "poliçe",
+        "poliçem",
+        "ÖSS",
+        "TSS"
+      ]
+    },
+    {
+      "kavram": "provizyon",
+      "kelimeler": [
+        "provizyon",
+        "kabul etmedi",
+        "geri çevirdi"
+      ]
+    },
+    {
+      "kavram": "izin",
+      "kelimeler": [
+        "izin",
+        "izni",
+        "iznim",
+        "izne",
+        "izine",
+        "tatil"
+      ]
+    },
+    {
+      "kavram": "rapor",
+      "kelimeler": [
+        "rapor",
+        "istirahat",
+        "hastalık izni",
+        "hastalandım"
+      ]
+    },
+    {
+      "kavram": "vefat",
+      "kelimeler": [
+        "vefat",
+        "cenaze",
+        "ölüm",
+        "rahmetli",
+        "taziye"
+      ]
+    },
+    {
+      "kavram": "taşınma",
+      "kelimeler": [
+        "taşınma",
+        "taşınıyorum",
+        "taşınacağım",
+        "nakliye",
+        "ev değiştirme",
+        "ev taşıma"
+      ]
+    },
+    {
+      "kavram": "maaş",
+      "kelimeler": [
+        "maaş",
+        "maaşım",
+        "ücret",
+        "brüt",
+        "net maaş"
+      ]
+    },
+    {
+      "kavram": "bordro",
+      "kelimeler": [
+        "bordro",
+        "bordrom",
+        "maaş pusulası",
+        "hesap pusulası"
+      ]
+    },
+    {
+      "kavram": "bes",
+      "kelimeler": [
+        "BES",
+        "bireysel emeklilik",
+        "cayma"
+      ]
+    },
+    {
+      "kavram": "yemek kartı",
+      "kelimeler": [
+        "yemek",
+        "Sodexo",
+        "yemek kartı"
+      ]
+    },
+    {
+      "kavram": "ulaşım kartı",
+      "kelimeler": [
+        "İstanbulkart",
+        "İstanbul kart",
+        "ulaşım kartı",
+        "akbil",
+        "ulaşım"
+      ]
+    },
+    {
+      "kavram": "kayıp",
+      "kelimeler": [
+        "kayıp",
+        "kaybettim",
+        "kayboldu",
+        "çalındı",
+        "çalıntı",
+        "düşürdüm"
+      ]
+    },
+    {
+      "kavram": "e-posta",
+      "kelimeler": [
+        "e-posta",
+        "mail",
+        "webmail",
+        "posta"
+      ]
+    },
+    {
+      "kavram": "şifre",
+      "kelimeler": [
+        "şifre",
+        "şifremi",
+        "parola",
+        "giremiyorum",
+        "giriş yapamıyorum"
+      ]
+    },
+    {
+      "kavram": "kıyafet",
+      "kelimeler": [
+        "kıyafet",
+        "üniforma",
+        "iş elbisesi",
+        "ayakkabı",
+        "forma",
+        "yelek",
+        "mont"
+      ]
+    },
+    {
+      "kavram": "tayin",
+      "kelimeler": [
+        "tayin",
+        "nakil",
+        "başka şube",
+        "şube değiştirmek"
+      ]
+    },
+    {
+      "kavram": "fazla mesai",
+      "kelimeler": [
+        "fazla mesai",
+        "ek mesai",
+        "denkleştirme"
+      ]
+    },
+    {
+      "kavram": "çalışma saati",
+      "kelimeler": [
+        "çalışma saati",
+        "mesai saati",
+        "vardiya",
+        "kaçta başlıyor",
+        "kaçta bitiyor"
+      ]
+    },
+    {
+      "kavram": "ikame",
+      "kelimeler": [
+        "ikame",
+        "yerine personel",
+        "yedek personel"
+      ]
+    },
+    {
+      "kavram": "emekli",
+      "kelimeler": [
+        "emekli",
+        "emekliyim",
+        "emeklilik"
+      ]
+    },
+    {
+      "kavram": "başvuru",
+      "kelimeler": [
+        "başvuru",
+        "iş başvurusu",
+        "CV",
+        "iş ilanı",
+        "işe girmek"
+      ]
+    },
+    {
+      "kavram": "personel talebi",
+      "kelimeler": [
+        "personel talebi",
+        "yeni personel",
+        "yeni eleman",
+        "eleman lazım",
+        "personel lazım",
+        "eleman ihtiyacı",
+        "personel ihtiyacı"
+      ]
+    },
+    {
+      "kavram": "iptal",
+      "kelimeler": [
+        "iptal",
+        "vazgeçmek",
+        "sildirmek",
+        "geri almak"
+      ]
+    },
+    {
+      "kavram": "telefon",
+      "kelimeler": [
+        "telefon",
+        "telefondan",
+        "mobil",
+        "cep telefonu"
+      ]
+    },
+    {
+      "kavram": "web sitesi",
+      "kelimeler": [
+        "web sitesi",
+        "internet sitesi",
+        "site"
+      ]
+    },
+    {
+      "kavram": "şube kapanış",
+      "kelimeler": [
+        "kapanacak",
+        "kapanıyor",
+        "kapandı",
+        "birleşiyor",
+        "birleştirme"
+      ]
+    },
+    {
+      "kavram": "ödül",
+      "kelimeler": [
+        "ödül",
+        "plaket",
+        "hizmet hatırası"
+      ]
+    },
+    {
+      "kavram": "limit",
+      "kelimeler": [
+        "limit",
+        "tavan",
+        "üst sınır"
+      ]
+    },
+    {
+      "kavram": "giriş",
+      "kelimeler": [
+        "giriş",
+        "giriş yapmak",
+        "girerim",
+        "girilir",
+        "girebilirim",
+        "girmek"
+      ]
+    }
+  ],
+  "sohbet": [
+    {
+      "tur": "selam",
+      "ifadeler": [
+        "merhaba",
+        "merhabalar",
+        "selam",
+        "selamlar",
+        "selamünaleyküm",
+        "günaydın",
+        "iyi günler",
+        "iyi akşamlar",
+        "hayırlı günler",
+        "hayırlı işler",
+        "kolay gelsin"
+      ],
+      "cevap": "Merhaba, ben İşmer İnsan Kaynakları'nın asistanı Pusula. Size nasıl yardımcı olabilirim?"
+    },
+    {
+      "tur": "tesekkur",
+      "ifadeler": [
+        "teşekkür",
+        "teşekkürler",
+        "teşekkür ederim",
+        "sağ ol",
+        "sağ olun",
+        "eyvallah",
+        "eline sağlık",
+        "allah razı olsun"
+      ],
+      "cevap": "Rica ederim. Başka bir sorunuz olursa yazabilirsiniz."
+    },
+    {
+      "tur": "kimsin",
+      "ifadeler": [
+        "sen kimsin",
+        "adın ne",
+        "bot musun",
+        "robot musun",
+        "insan mısın",
+        "gerçek kişi misin"
+      ],
+      "cevap": "Ben Pusula, İşmer İnsan Kaynakları'nın asistanıyım. Sık sorulan sorulardaki bilgilerle izin, bordro, sağlık sigortası, yemek kartı gibi konularda yardımcı olurum."
+    },
+    {
+      "tur": "nasilsin",
+      "ifadeler": [
+        "nasılsın",
+        "nasılsınız",
+        "naber",
+        "ne haber"
+      ],
+      "cevap": "İyiyim, teşekkür ederim. Size nasıl yardımcı olabilirim?"
+    },
+    {
+      "tur": "veda",
+      "ifadeler": [
+        "görüşürüz",
+        "hoşça kal",
+        "hoşçakal",
+        "iyi çalışmalar",
+        "güle güle",
+        "bay bay"
+      ],
+      "cevap": "İyi çalışmalar dilerim. Başka bir sorunuz olursa buradayım."
+    },
+    {
+      "tur": "onay",
+      "ifadeler": [
+        "tamam",
+        "tamamdır",
+        "anladım",
+        "ok",
+        "okey",
+        "peki"
+      ],
+      "cevap": "Başka bir sorunuz olursa yazabilirsiniz."
+    },
+    {
+      "tur": "oneri",
+      "ifadeler": [],
+      "cevap": "Sorunuzu tam anlayamadım. Aşağıdakilerden birini mi soruyorsunuz?"
+    },
+    {
+      "tur": "bulunamadi",
+      "ifadeler": [],
+      "cevap": "Bu soruyu sık sorulan sorular arasında bulamadım. Sorunuzu farklı kelimelerle yazabilir ya da İnsan Kaynakları ile iletişime geçebilirsiniz (insan.kaynaklari@ismer.com.tr)."
+    },
+    {
+      "tur": "konu_disi",
+      "ifadeler": [],
+      "cevap": "Bu konuda yardımcı olamıyorum. İzin, bordro, sağlık sigortası, yemek kartı gibi İşmer'deki çalışma hayatınızla ilgili sorularınızı yanıtlayabilirim."
+    },
+    {
+      "tur": "bos_cevap",
+      "ifadeler": [],
+      "cevap": "Bu konuda elimde net bir bilgi yok. Lütfen İnsan Kaynakları ile iletişime geçin (insan.kaynaklari@ismer.com.tr)."
+    },
+    {
+      "tur": "oneri_tek",
+      "ifadeler": [],
+      "cevap": "Sorunuzu tam anlayamadım. Bunu mu soruyorsunuz?"
+    }
+  ]
+}

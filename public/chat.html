@@ -64,10 +64,6 @@
   .hd-text { flex: 1; min-width: 0; }
   .hd-title { font-size: 16.5px; font-weight: 700; line-height: 1.2; display: flex; align-items: center; gap: 8px; letter-spacing: .01em; }
   .hd-sub { font-size: 12.5px; opacity: .85; line-height: 1.3; }
-  .tag-demo {
-    font-size: 11px; font-weight: 500; padding: 1px 8px; border-radius: 999px;
-    background: rgba(255,255,255,.18); letter-spacing: .01em;
-  }
   .icon-btn {
     width: 40px; height: 40px; border-radius: 10px; border: 0; background: transparent;
     color: #fff; display: grid; place-items: center; cursor: pointer; flex: none;
@@ -240,7 +236,7 @@
   <header class="hd">
     <div class="av" id="hdAv" aria-hidden="true"></div>
     <div class="hd-text">
-      <div class="hd-title">Pusula <span class="tag-demo" id="demoTag" hidden>Demo</span></div>
+      <div class="hd-title">Pusula</div>
       <div class="hd-sub">İşmer İK Asistanı</div>
     </div>
     <button class="icon-btn" id="newChat" type="button" aria-label="Yeni sohbet başlat" title="Yeni sohbet">
@@ -265,28 +261,26 @@
       </button>
     </div>
     <div class="meta">
-      <span class="note">Pusula, İşmer İK'nın yapay zekâ asistanıdır ve hata yapabilir. Önemli bilgileri İnsan Kaynakları'ndan teyit edin.</span>
+      <span class="note">Pusula, İK'nın sık sorulan sorularındaki bilgilerle cevap verir. Önemli bilgileri İnsan Kaynakları'ndan teyit edin.</span>
       <span class="count" id="count" aria-live="polite"></span>
     </div>
   </form>
 </div>
 
+<script src="eslestirici.js"></script>
 <script>
 (() => {
   const MAX = 300;
-  const API = "/api/chat";
   const IK_ILETISIM = "insan.kaynaklari@ismer.com.tr";
-  const qs = new URLSearchParams(location.search);
-  const DEMO = window.__DEMO__ === true || qs.get("demo") === "1" || location.protocol === "file:";
   const EMBEDDED = window.parent !== window;
 
   const $ = (id) => document.getElementById(id);
   const log = $("log"), form = $("form"), input = $("input"), send = $("send"), count = $("count");
-  if (DEMO) $("demoTag").hidden = false;
   if (EMBEDDED) $("closeBtn").hidden = false;
 
   let SSS = [];
-  let gecmis = [];   // { rol: "kullanici" | "asistan", metin }
+  let motor = null;  // eslestirici.js: soruyu SSS'de arayan motor
+  let onceki = null; // son cevaplanan SSS maddesi (kısa takip soruları için)
   let sorulan = new Set();
   let onerilen = new Set();
   let bekliyor = false;
@@ -516,7 +510,7 @@
 
   function baslat() {
     log.replaceChildren();
-    gecmis = [];
+    onceki = null;
     sorulan = new Set();
     onerilen = new Set();
     const w = el("section", "welcome");
@@ -541,23 +535,22 @@
     guncelle();
 
     const soru = tekrarMi ? null : mesajEkle("kullanici", metin).m;
-    gecmis.push({ rol: "kullanici", metin });
     input.value = "";
     boyutla(); guncelle();
     const gosterge = yaziyor();
 
     try {
-      const sonuc = DEMO ? await demoCevap(metin) : await apiCevap();
+      // Cevap anında hazır; kısa bekleme yalnızca sohbetin doğal görünmesi için
+      await new Promise((r) => setTimeout(r, 350));
+      if (!motor) await yukle();
+      if (!motor) throw new Error("sss_yok");
+      const sonuc = motor.cevapla(metin, { onceki });
       gosterge.remove();
-      gecmis.push({ rol: "asistan", metin: sonuc.cevap });
-      sonuc.kaynaklar.forEach((id) => sorulan.add(id));
-      const satir = mesajEkle("asistan", sonuc.cevap, { kaynaklar: sonuc.kaynaklar });
-      if (sonuc.kaynaklar.length) ilgiliSorular(satir.kolon, sonuc.kaynaklar);
-      basaGetir(soru || satir.m);
+      cevapGoster(sonuc, soru);
     } catch (e) {
+      console.error(e);
       gosterge.remove();
-      if (gecmis.length && gecmis[gecmis.length - 1].rol === "kullanici") gecmis.pop();
-      mesajEkle("asistan", hataMetni(e.kod), { hata: true, tekrar: e.kod === "uzun" ? null : metin });
+      mesajEkle("asistan", `Şu an yanıt veremiyorum. Biraz sonra tekrar deneyin ya da İnsan Kaynakları ile iletişime geçin (${IK_ILETISIM}).`, { hata: true, tekrar: metin });
       asagi();
     } finally {
       bekliyor = false;
@@ -566,89 +559,26 @@
     }
   }
 
-  async function apiCevap() {
-    let r;
-    try {
-      r = await fetch(API, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ mesajlar: gecmis.slice(-6) }),
-      });
-    } catch { throw { kod: "baglanti" }; }
-    let veri = {};
-    try { veri = await r.json(); } catch {}
-    if (!r.ok) throw { kod: veri.hata || "servis" };
-    return { cevap: veri.cevap, kaynaklar: Array.isArray(veri.kaynaklar) ? veri.kaynaklar : [] };
-  }
-
-  function hataMetni(kod) {
-    switch (kod) {
-      case "limit": return "Kısa sürede çok fazla mesaj gönderildi. Bir dakika sonra tekrar deneyin.";
-      case "uzun": return `Sorunuz en fazla ${MAX} karakter olabilir. Lütfen kısaltıp tekrar gönderin.`;
-      case "baglanti": return "Bağlantı kurulamadı. İnternet bağlantınızı kontrol edip tekrar deneyin.";
-      case "kota": return "Pusula şu an yoğun. Birkaç dakika sonra tekrar deneyin.";
-      default: return `Şu an yanıt veremiyorum. Biraz sonra tekrar deneyin ya da İnsan Kaynakları ile iletişime geçin (${IK_ILETISIM}).`;
+  function cevapGoster(sonuc, soru) {
+    const satir = mesajEkle("asistan", sonuc.metin, { kaynaklar: sonuc.kaynaklar });
+    if (sonuc.kaynaklar.length) {
+      onceki = sonuc.kaynaklar[0];
+      sonuc.kaynaklar.forEach((id) => sorulan.add(id));
+      ilgiliSorular(satir.kolon, sonuc.kaynaklar);
     }
-  }
-
-  // ---------- Demo modu (API olmadan, SSS üzerinden basit eşleştirme) ----------
-  const ESANLAM = [
-    ["cocuk", "bebek", "dogum", "dogdu", "evlat", "oglum", "kizim", "analik", "hamile"],
-    ["es", "esim", "karim", "kocam", "esimi", "esimin"],
-    ["hastane", "hastaneler", "hastanelerde", "klinik", "anlasmali", "ozel"],
-    ["evrak", "evraklar", "belge", "belgeler", "dokuman"],
-    ["teminat", "teminatlar", "kapsam", "kapsami", "kapsar"],
-    ["aktif", "baslar", "gecerli", "yapildi", "police", "policem", "sigorta"],
-    ["provizyon", "onay", "alamazsam", "alamadim"],
-    ["dahil", "eklemek", "ekleyebilir", "ekle", "ekleme"],
-    ["izin", "izni", "izne", "iznim", "tatil"],
-    ["rapor", "istirahat", "hastalik"],
-    ["cenaze", "vefat", "olum", "kaybettik"],
-    ["tasinma", "tasiniyorum", "tasinacagim", "ev"],
-    ["maas", "ucret", "ucretim", "brut", "net", "maasim"],
-    ["bordro", "bordrom", "bordromu"],
-    ["bes", "cayma", "bireysel"],
-    ["yemek", "sodexo", "yemekkarti"],
-    ["istanbulkart", "istanbul", "ulasim", "akbil"],
-    ["kayip", "kaybettim", "kaybolan", "calindi", "calinti"],
-    ["mail", "eposta", "posta", "webmail"],
-    ["sifre", "sifremi", "parola"],
-    ["kiyafet", "uniforma", "elbise", "ayakkabi"],
-    ["tayin", "nakil"],
-    ["mesai", "fazla"],
-    ["ikame", "yerine"],
-    ["emekli", "emeklilik", "emekliyim"],
-    ["basvuru", "basvurmak", "eleman"],
-    ["calisma", "saat", "saatleri", "vardiya"],
-  ];
-  const DURAK = new Set("ve ile mi mı mu mü ne bir bu su şu da de için icin nasil nasıl hangi var yok mi? ben benim bana olur olarak gibi ya ki daha en çok cok kac kaç".split(" "));
-  const sade = (s) => s.toLocaleLowerCase("tr").replace(/ı/g, "i").replace(/ş/g, "s").replace(/ğ/g, "g").replace(/ü/g, "u").replace(/ö/g, "o").replace(/ç/g, "c").replace(/[^a-z0-9\s]/g, " ");
-  const kok = (w) => w.slice(0, 5);
-  function kelimeler(s) {
-    const out = new Set();
-    sade(s).split(/\s+/).filter((w) => w.length > 1 && !DURAK.has(w)).forEach((w) => {
-      out.add(kok(w));
-      ESANLAM.forEach((grup, i) => { if (grup.some((g) => kok(g) === kok(w))) out.add("#" + i); });
-    });
-    return out;
-  }
-  async function demoCevap(metin) {
-    await new Promise((r) => setTimeout(r, 650));
-    const q = kelimeler(metin);
-    let en = null, puan = 0;
-    for (const k of SSS) {
-      const ks = kelimeler(k.soru), kc = kelimeler(k.cevap);
-      let p = 0;
-      q.forEach((w) => { if (ks.has(w)) p += w.startsWith("#") ? 2 : 1.5; else if (kc.has(w)) p += 0.4; });
-      if (p > puan) { puan = p; en = k; }
+    if (sonuc.tur === "oneri") {
+      // "Bunu mu demek istediniz?": aday sorular buton olarak; dokununca o sorunun cevabı gelir
+      const liste = el("ul", "qlist");
+      sonuc.oneriler.map((id) => SSS.find((k) => k.id === id)).filter(Boolean).forEach((k) => liste.appendChild(soruButonu(k)));
+      satir.kolon.appendChild(liste);
     }
-    if (!en || puan < 2) {
-      return { cevap: `Bu soruyu sık sorulan sorular arasında bulamadım. Lütfen İnsan Kaynakları ile iletişime geçin (${IK_ILETISIM}).`, kaynaklar: [] };
+    if (sonuc.tur === "bulunamadi" || sonuc.tur === "konu_disi") {
+      const b = el("button", "retry", "Konulara göz atın");
+      b.type = "button";
+      b.addEventListener("click", konulariGoster);
+      satir.kolon.appendChild(b);
     }
-    if (!en.cevap) {
-      return { cevap: `Bu konuda elimde net bir bilgi yok. Lütfen İnsan Kaynakları ile iletişime geçin (${IK_ILETISIM}).`, kaynaklar: [] };
-    }
-    return { cevap: en.cevap, kaynaklar: [en.id] };
+    basaGetir(soru || satir.m);
   }
 
   // ---------- Yazma alanı ----------
@@ -672,11 +602,18 @@
   window.addEventListener("message", (e) => { if (e.data && e.data.type === "ika:acildi" && !matchMedia("(pointer: coarse)").matches) input.focus(); });
 
   // ---------- Başlangıç ----------
-  (async () => {
-    if (Array.isArray(window.__SSS__)) SSS = window.__SSS__;
-    else {
-      try { SSS = await (await fetch("sss.json", { cache: "no-cache" })).json(); } catch { SSS = []; }
+  // sss.json: sorular, sözlük ve sohbet cevapları (data/sss.xlsx'ten üretilir). Önizleme dosyasında sayfaya gömülüdür.
+  async function yukle() {
+    try {
+      const bilgi = window.__SSS__ || await (await fetch("sss.json", { cache: "no-cache" })).json();
+      SSS = bilgi.sorular || [];
+      motor = window.Eslestirici.kur(bilgi);
+    } catch (e) {
+      console.error("sss_yuklenemedi", e);
     }
+  }
+  (async () => {
+    await yukle();
     baslat();
   })();
 })();

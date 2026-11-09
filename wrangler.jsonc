@@ -1,27 +1,10 @@
 {
   // Cloudflare ayarları. Proje adı yayınlanan adreste görünür: ismer-ik-asistan.<hesap>.workers.dev
+  // Sunucu kodu yok: Cloudflare yalnızca public/ klasöründeki dosyaları sunar.
+  // Portalın kendi sunucusuna taşınırken public/ klasörünü kopyalamak yeterlidir.
   "name": "ismer-ik-asistan",
-  "main": "src/worker.js",
   "compatibility_date": "2026-10-01",
   "assets": {
-    "directory": "./public",
-    "binding": "ASSETS"
-  },
-  // Kullanıcı (IP) başına dakikada en fazla 8 mesaj
-  "ratelimits": [
-    {
-      "name": "SOHBET_LIMIT",
-      "namespace_id": "1001",
-      "simple": { "limit": 8, "period": 60 }
-    }
-  ],
-  // Gizli olmayan ayarlar. API anahtarı BURAYA YAZILMAZ; "wrangler secret put GEMINI_API_KEY" ile girilir.
-  "vars": {
-    "GEMINI_MODEL": "gemini-3.5-flash-lite",
-    "MAX_SORU_KARAKTER": "300",
-    "GECMIS_MESAJ": "6",
-    "MAX_CEVAP_TOKEN": "600",
-    "IZINLI_KAYNAKLAR": ""
-  },
-  "observability": { "enabled": true }
+    "directory": "./public"
+  }
 }

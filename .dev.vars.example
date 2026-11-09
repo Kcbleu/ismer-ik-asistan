@@ -1,3 +1,0 @@
-# Bu dosyayı ".dev.vars" adıyla kopyalayıp anahtarınızı yazın. Sadece kendi bilgisayarınızda test için.
-# .dev.vars dosyası GitHub'a yüklenmez (.gitignore).
-GEMINI_API_KEY=buraya_anahtar

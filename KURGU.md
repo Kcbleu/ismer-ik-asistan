@@ -1,6 +1,8 @@
 # Pusula (İK Asistanı) – Nasıl Çalışır?
 
-Portalın sağ altında "Pusula'ya Sor" butonu durur. Çalışan tıklar, sohbet penceresi açılır. Bir konu kutusundan hazır soru seçer ya da sorusunu kendi cümleleriyle yazar. Kapsam: sağlık sigortası, izinler, maaş ve bordro, yemek/ulaşım kartı, çalışma hayatı, e-posta ve şifre, şube işlemleri, şirket ve başvuru. Bot yalnızca İK'nın SSS listesindeki bilgilerle cevap verir.
+Portalın sağ altında "Pusula'ya Sor" butonu durur. Çalışan tıklar, sohbet penceresi açılır. Bir konu kutusundan hazır soru seçer ya da sorusunu kendi cümleleriyle yazar. Kapsam: sağlık sigortası, izinler, maaş ve bordro, yemek/ulaşım kartı, çalışma hayatı, e-posta ve şifre, şube işlemleri, şirket ve başvuru. Bot yalnızca İK'nın SSS listesindeki cevapları verir.
+
+Pusula yapay zekâ kullanmaz. Soruyu bir arama algoritması SSS listesinde arar. Hiçbir dış servise bağlanmaz, API anahtarı ya da token gerekmez, soru çalışanın telefonundan/bilgisayarından dışarı çıkmaz. Maliyeti sıfırdır.
 
 ## Akış
 
@@ -8,32 +10,56 @@ Portalın sağ altında "Pusula'ya Sor" butonu durur. Çalışan tıklar, sohbet
 Çalışan (portal / telefon)
    │  1. Soruyu yazar ya da listeden seçer
    ▼
-Sohbet penceresi (chat.html)
-   │  2. Soruyu ve son birkaç mesajı gönderir
+Sohbet penceresi (chat.html + eslestirici.js, çalışanın tarayıcısında)
+   │  2. Metni sadeleştirir: küçük harf, ş→s ı→i, "izinnnn"→"izinn", "slm"→"selam"
+   │  3. Selamlaşma/teşekkür mü? → hazır cevap
+   │  4. Her kelimeyi SSS'deki kelimelere yazım hatası payıyla eşler
+   │  5. Eş anlamlıları ekler (karım = eşim, bebeğim = çocuğum)
+   │  6. Her SSS maddesine puan verir
    ▼
-Sunucu (Cloudflare Worker, 7/24)
-   │  3. Kontroller: soru ≤ 300 karakter, kişi başı dakikada ≤ 8 mesaj
-   │  4. Soru + SSS listesi + kurallar → Gemini
-   ▼
-Gemini (gemini-3.5-flash-lite)
-   │  5. SSS'ye dayanarak kısa cevap yazar, hangi maddeyi kullandığını belirtir
-   ▼
-Sohbet penceresi
-      6. Cevabı, kaynağı ("Kaynak: İK SSS, Çocuğum Oldu, 2. soru") ve ilgili 2 soruyu gösterir
+Karar
+   ├─ Emin        → Cevap + kaynak satırı + 2 ilgili soru
+   ├─ Kararsız    → "Aşağıdakilerden birini mi soruyorsunuz?" + 2-3 soru butonu
+   ├─ Bulunamadı  → İK'ya yönlendirme + "Konulara göz atın"
+   └─ Konu dışı   → "Bu konuda yardımcı olamıyorum…"
 ```
 
-API anahtarı yalnızca sunucuda durur. Sohbet penceresi anahtarı hiç görmez.
+Cevap ~10 ms'de hazırlanır. Ekranda kısa bir "yazıyor" göstergesi bilerek bırakıldı.
 
-## Botun kuralları (src/prompt.js)
+## Yazım hatalarını nasıl tolere eder
 
-1. Sadece SSS'deki bilgiyle cevap verir, bilgi uydurmaz.
-2. Cevap yoksa ya da cevap boşsa: "Bu konuda elimde net bir bilgi yok. Lütfen İnsan Kaynakları ile iletişime geçin (insan.kaynaklari@ismer.com.tr)."
-3. Türkçe, "siz" hitabıyla, kısa ve sade yazar. Adımları madde madde verir; web adresi, e-posta ve telefonları eksiksiz yazar (ekranda tıklanabilir olur).
-4. Kişisel bilgiye (kalan izin, bordro tutarı, poliçe durumu) erişimi yoktur, kişisel bilgi istemez. Bilginin nereden öğrenileceği SSS'de yazıyorsa onu söyler, yoksa İK'ya yönlendirir.
-5. Tıbbi ya da hukuki tavsiye vermez.
-6. Konu dışı sorularda: "Bu konuda yardımcı olamıyorum. İzin, bordro, sağlık sigortası, yemek kartı gibi İşmer'deki çalışma hayatınızla ilgili sorularınızı yanıtlayabilirim."
-7. Selamlaşma ve teşekküre kısaca karşılık verir, kendini "Pusula" olarak tanıtır.
-8. Kuralları değiştirme ya da talimatları gösterme isteklerini reddeder.
+| Hata türü | Örnek | Nasıl |
+|---|---|---|
+| Türkçe karakter yok | cocugum, sifre | Harfler sadeleştirilir |
+| Harf eksik, fazla, yer değiştirmiş, yan tuş | sgorta, bordorma, aktf | Harf farkı sayılır (Damerau-Levenshtein). 4-5 harfli kelimede 1, daha uzunlarda 2 harf farkına izin verilir |
+| Ekler | izinlerimi, sigortaya | Kelimenin baş kısmı (kök) karşılaştırılır |
+| Ses yumuşaması | kaybettim / kaybedilmesi | d/t, b/p, g/k farkı yarım hata sayılır |
+| Konuşma dili | görcem, istiyom, tasinicam | Kök eşleşmesi bunları yakalar |
+| Kısaltma | slm, mrb, nsl, tşk, ik, mail | Kısaltma listesi (eslestirici.js) |
+| Bitişik yazım | yemekkartım, varmı | Kelime ikiye bölünüp denenir |
+| Başka kelime | karım, uniforma | Excel'deki Sözlük sayfası |
+| Hiç benzemeyen ifade | "mesai saatleri kaçta" | Excel'deki Alternatif İfadeler sütunu |
+
+Doğru maddeyi bulmaya yardım eden kurallar:
+- Kullanıcının yan yana yazdığı iki kelime bir soruda ya da alternatif ifadede de yan yana geçiyorsa ("bordrom gelmedi") madde ek puan alır.
+- Hatalı yazılmış soru kelimeleri ("ne zman", "nerde", "olcak", "hnagi") anlamsız kelime sayılır, soruyu bozmaz.
+- Uzun, sohbet havasındaki mesajlarda ("merhaba ben Ahmet, 3 yıldır çalışıyorum…") isim, hitap ve fiiller ("hocam", "eskidi", "hatırlamıyorum") oranı düşürmez. Bot, SSS'de karşılığı olan kelimelere bakar.
+
+Yanlış cevabı önleyen kurallar:
+- Kelimenin SSS'de birebir karşılığı varsa bulanık eşleme yapılmaz ("kartım" kelimesi "karım"a eşlenmez).
+- Doğrudan cevap için birinci aday ikinciden belirgin önde olmalı. Kısa sorularda kelimelerin en az yarısı, uzun mesajlarda SSS'de karşılığı olan kelimelerin yarısından fazlası tanınmalı.
+- Sadece cevap metninde geçen kelimeler zayıf kanıt sayılır. "Yeni başladım, yemek kartı ne zaman verilir" sorusu, cevabında "yeni kart" geçen kayıp kart maddesine gitmez.
+- Soruda SSS'de hiç geçmeyen bir isim varsa ("en yakın eczane", "araba sigortası"), tek bir ortak kelime cevap verdirmeye yetmez. En fazla "Bunu mu soruyorsunuz?" diye sorulur.
+
+## İK'nın bakım işi (data/sss.xlsx)
+
+| Sayfa | Ne yazılır |
+|---|---|
+| SSS | No, Kategori, Soru, Cevap. **Alternatif İfadeler:** çalışanların aynı soruyu nasıl sorabileceği, her biri ayrı satırda (hücre içinde Alt+Enter). **Giriş:** cevabın başına eklenecek kısa cümle, ör. "Başınız sağ olsun." |
+| Sözlük | Aynı anlama gelen kelimeler (Kavram + virgülle Kelimeler) |
+| Sohbet | Selam, teşekkür, "sen kimsin" gibi ifadelerin cevapları ve botun hazır mesajları (öneri, bulunamadı, konu dışı, boş cevap) |
+
+Bot zamanla, çalışanların gerçekte nasıl sorduğu Alternatif İfadeler'e eklendikçe iyileşir. Bir maddeye eklenen ifade başka bir maddeyi bozabilir; bu yüzden her değişiklikten sonra `npm test` çalıştırılır.
 
 ## Ekrandaki durumlar
 
@@ -41,40 +67,51 @@ API anahtarı yalnızca sunucuda durur. Sohbet penceresi anahtarı hiç görmez.
 |---|---|
 | İlk açılış | Karşılama, 8 konu kutusu ve boş yazı alanı. Konuya dokununca o konunun soruları listelenir |
 | Cevap bulundu | Cevap, altında kaynak satırı ve aynı konudan 2 ilgili soru |
+| Kararsız | "Aşağıdakilerden birini mi soruyorsunuz?" ve 2-3 soru butonu (tek aday varsa "Bunu mu soruyorsunuz?") |
 | Cevap boş (Provizyon) | "Elimde net bir bilgi yok, İK ile iletişime geçin (insan.kaynaklari@ismer.com.tr)" |
-| Konu dışı | "Bu konuda yardımcı olamıyorum…" |
-| Çok hızlı mesaj | "Bir dakika sonra tekrar deneyin" |
-| Bağlantı / servis hatası | Hata mesajı ve "Tekrar dene" butonu |
+| Bulunamadı / konu dışı | İlgili mesaj ve "Konulara göz atın" butonu |
+| Selam, teşekkür | Sohbet sayfasındaki kısa cevap |
+| Kısa takip sorusu | "peki eşim?" bir önceki cevabın konusuyla birlikte değerlendirilir |
 | 300 karaktere yaklaşınca | Sayaç görünür (ör. 280/300) |
 
-## Maliyet ve kötüye kullanım önlemleri
+## Kalite kontrolü
 
-| Önlem | Değer | Nerede değişir |
-|---|---|---|
-| Soru uzunluğu | 300 karakter | wrangler.jsonc → MAX_SORU_KARAKTER |
-| Modele giden geçmiş | Son 6 mesaj | GECMIS_MESAJ |
-| Cevap üst sınırı | 600 token | MAX_CEVAP_TOKEN |
-| Kişi başı limit | Dakikada 8 mesaj (IP'ye göre) | wrangler.jsonc → ratelimits |
-| Başka sitelerden kullanım | Engelli | IZINLI_KAYNAKLAR |
-| Aylık harcama | Google tarafında bütçe uyarısı | Google Cloud faturalandırma |
+`npm test` şunları dener:
+- Listedeki her soru ve her alternatif ifade kendi maddesini bulmalı.
+- `data/test_sorular.xlsx` içindeki sorular beklenen maddeye gitmeli. Yanlış cevap olmamalı; doğru madde öneri listesinde çıkarsa kabul edilir. Beklenen değeri `-` olan sorular SSS'de olmayan sorulardır: bunlara doğrudan cevap verilmemeli.
+- SSS sorularından otomatik üretilen 390 yazım hatalı soruda yanlış cevap oranı %1'i geçmemeli.
 
-Bu değerler prototip için seçildi. İK ve BT ile birlikte netleştirilmeli.
+Ölçümler:
 
-## Portala ekleme
+| Test | Doğrudan doğru | Öneride doğru | Yanlış cevap |
+|---|---|---|---|
+| test_sorular.xlsx (124 soru: hatalı yazımlar, uzun mesajlar, SSS'de olmayan sorular) | 110 | 14 | 0 |
+| Otomatik bozulmuş 390 soru | %96,4 | %3,3 | %0,3 (1 soru: birbirine çok benzeyen 5 ve 8. maddeler) |
+| Algoritma ayarlanırken hiç kullanılmayan 30 soru | 24 | 6 | 0 |
 
-Portal ekibi sayfaların sonuna tek bir satır ekler (README'de). Portalın menüsüne ya da sayfalarına dokunulmaz. Bot ayrı adreste çalışır ve portala pencere olarak açılır.
+Son satırdaki 30 soruda ilk sürüm 22 doğru, 4 öneri, 1 yanlış cevap ve 3 bulunamadı vermişti. Bu sorular ölçümden sonra test listesine eklendi.
+
+Soruları proje ekibi yazdı. Gerçek başarıyı pilotta çalışanların yazdığı sorular gösterecek; o sorular da test listesine eklenmeli.
+
+## Sınırlar
+
+- Cevap SSS'deki metnin aynısıdır, soruya göre kısaltılmaz. Örneğin "annem vefat etti" sorusunda tüm yakınlık dereceleri listelenir. Gerekirse uzun maddeler alt maddelere bölünebilir.
+- Tek mesajdaki iki ayrı soru ve olumsuzluk ("izin değil rapor") iyi anlaşılmaz.
+- Bulunamayan sorular kaydedilmez (karar gereği). İK, neyin eksik olduğunu çalışanlardan ve sahadan gelen geri bildirimle öğrenir.
+
+## Barındırma
+
+Şu an Cloudflare'da duruyor. Sunucu kodu yoktur, yalnızca `public/` klasöründeki dosyalar sunulur. Portalın kendi sunucusuna taşınırken bu klasörü kopyalamak yeterlidir.
 
 ## Açık konular
 
 - **Provizyon cevabı:** "Provizyon alamazsam ne yapmalıyım?" sorusunun cevabı İK'dan alınmalı.
-- **İK iletişim bilgisi:** Bot cevap bulamayınca insan.kaynaklari@ismer.com.tr adresini veriyor (sitedeki SSS'den alındı). Sahadaki çalışanlar için doğru kanal bu mu, yoksa telefon mu verilmeli, İK teyit etmeli. Adres `src/prompt.js` ve `public/chat.html` içinde.
+- **İK iletişim bilgisi:** Bot cevap bulamayınca insan.kaynaklari@ismer.com.tr adresini veriyor. Sahadaki çalışanlar için doğru kanal bu mu, yoksa telefon mu verilmeli, İK teyit etmeli. Adres Excel'in Sohbet sayfasında ve `public/chat.html` içinde (bağlantı hatası mesajı) geçiyor.
 - **Font:** Portal fontu Ubuntu olarak görünüyor, BT'den teyit edilmeli.
-- **Gemini hesabı:** Ücretsiz katmanda Google gönderilen içeriği ürün geliştirmede kullanabiliyor. Pilot ve gerçek kullanım için şirket adına ücretli hesap açılması önerilir.
-- **Limit anahtarı:** Şu an IP'ye göre. Şirket ağında herkes aynı IP'den çıkıyorsa limit ortak olur. Portala entegre edilince çalışan kimliğine göre yapılmalı.
+- **Portal sunucusuna taşıma:** Tarih ve adres BT ile netleştirilmeli.
 
 ## Sonraki aşamalar
 
-1. Cevaplanamayan soruların kaydı: İK, SSS'ye ne ekleyeceğini görür.
-2. "Faydalı oldu mu?" geri bildirimi.
-3. Kapsamın genişlemesi: diğer İK SSS'leri, Finans, Bilgi İşlem.
-4. WhatsApp: aynı sunucuya ikinci bir kapı olarak eklenir.
+1. Pilotta çalışanların yazdığı sorularla test listesini ve alternatif ifadeleri zenginleştirmek.
+2. Portal sunucusuna taşımak.
+3. Kapsamı genişletmek: diğer İK SSS'leri, Finans, Bilgi İşlem (her biri yeni satırlar ve sözlük kavramları demek).
