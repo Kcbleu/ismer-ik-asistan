@@ -11,6 +11,10 @@ const bilgi = JSON.parse(fs.readFileSync(new URL("../public/sss.json", import.me
 const motor = kur(bilgi);
 const SSS = bilgi.sorular;
 const sohbetTurleri = new Set(bilgi.sohbet.map((s) => s.tur));
+// Cevabı personel grubuna göre değişen maddenin cevabı gruplar listesindedir
+const cevapli = (k) => Boolean(k.cevap || (k.gruplar || []).length);
+// Doğru madde bulundu: cevap verildi ya da cevap gruba göre değiştiği için önce grup soruldu
+const bulundu = (r) => r.tur === "cevap" || r.tur === "grup_sor";
 
 const sonuc = [];
 let hataVar = false;
@@ -24,20 +28,26 @@ t("Türkçe harfler sadeleşir, harf uzatma kısalır", () => {
   assert.equal(sade("izinnnnn??"), "izinn");
   assert.equal(sade("e-posta şifrem"), "eposta sifrem");
 });
-t("harf farkı sayımı (eksik, yer değiştirme, d/t yumuşaması)", () => {
-  assert.equal(mesafe("sigorta", "sgorta"), 1);
-  assert.equal(mesafe("bordro", "bordor"), 1);
-  assert.equal(mesafe("kaybet", "kayben"), 1);
-  assert.equal(mesafe("kaybet", "kaybed"), 0.5);
+t("harf farkı sayımı (eksik, yer değiştirme, d/t yumuşaması, klavye yakınlığı)", () => {
+  assert.equal(mesafe("sigorta", "sgorta"), 1);    // eksik harf
+  assert.equal(mesafe("bordro", "bordor"), 1);     // yer değiştirme
+  assert.equal(mesafe("kaybet", "kaybed"), 0.5);   // ses yumuşaması
+  assert.equal(mesafe("izin", "izim"), 0.75);      // klavyede yan yana (n/m)
+  assert.equal(mesafe("kaybet", "kayben"), 1.25);  // klavyede uzak (t/n)
+});
+t("gerçek kelimeler birbirine karıştırılmaz (babalık izni cenaze izni değildir)", () => {
+  for (const q of ["babalık izni kaç gün", "baba olan çalışana izin var mı", "hangi telefonu alayım", "yemek kartı limiti ne kadar"]) {
+    assert.notEqual(motor.cevapla(q).tur, "cevap", q);
+  }
 });
 t("listeden seçilen her soru kendi cevabını getirir", () => {
   for (const k of SSS) {
     const r = motor.cevapla(k.soru);
-    assert.ok(r.kaynaklar.includes(k.id) || (!k.cevap && r.tur === "bos"), `${k.id}. soru: ${r.tur} ${r.kaynaklar}`);
+    assert.ok(r.kaynaklar.includes(k.id) || (!cevapli(k) && r.tur === "bos"), `${k.id}. soru: ${r.tur} ${r.kaynaklar}`);
   }
 });
 t("cevabı boş madde İK'ya yönlendirir", () => {
-  const bos = SSS.find((k) => !k.cevap);
+  const bos = SSS.find((k) => !cevapli(k));
   if (!bos) return;
   const r = motor.cevapla(bos.soru);
   assert.equal(r.tur, "bos");
@@ -65,44 +75,116 @@ t("selam + soru: soru cevaplanır", () => {
   assert.equal(motor.cevapla("iyi günler, bordromu nereden görürüm").tur, "cevap");
 });
 
+// Personel grubu: kalan izin banka PDH personelinde İzin Yönetim Sistemi'nden, ofis personelinde Bilişim HR'dan
+const gruplu = SSS.find((k) => (k.gruplar || []).length > 1);
+if (gruplu) {
+  const [g1, g2] = gruplu.gruplar;
+  const cevabi = (ad) => gruplu.gruplar.find((g) => g.ad === ad).cevap;
+  t("cevabı gruba göre değişen soruda grup bilinmiyorsa önce grup sorulur", () => {
+    const r = motor.cevapla(gruplu.soru);
+    assert.equal(r.tur, "grup_sor");
+    assert.deepEqual(r.kaynaklar, [gruplu.id]);
+    assert.deepEqual(r.secenekler.map((s) => s.ad), gruplu.gruplar.map((g) => g.ad));
+  });
+  t("grup biliniyorsa o grubun cevabı verilir", () => {
+    for (const g of [g1, g2]) {
+      const r = motor.cevapla(gruplu.soru, { grup: g.ad });
+      assert.equal(r.tur, "cevap");
+      assert.equal(r.metin, g.cevap);
+      assert.equal(r.grup, g.ad);
+    }
+  });
+  t("mesajda yazılan grup anlaşılır ve sorudan çıkarılır", () => {
+    const ofis = motor.cevapla("ofis personeliyim kaç gün iznim kaldı");
+    assert.equal(ofis.tur, "cevap");
+    assert.equal(ofis.metin, cevabi("Ofis personeli"));
+    assert.equal(ofis.grup, "Ofis personeli");
+    const banka = motor.cevapla("bankada çalışıyorum kalan iznimi nerden görürüm", { grup: "Ofis personeli" });
+    assert.equal(banka.metin, cevabi("Banka PDH personeli"), "mesajda yazılan grup hatırlanandan önce gelir");
+    assert.equal(motor.cevapla("pdh personeli kalan izin").grup, "Banka PDH personeli");
+  });
+  t("yalnızca grup yazılırsa önceki soru o grup için cevaplanır", () => {
+    const r = motor.cevapla("peki ofis personeli için?", { onceki: gruplu.id, grup: "Banka PDH personeli" });
+    assert.equal(r.metin, cevabi("Ofis personeli"));
+    const s = motor.cevapla("ofis personeliyim", { onceki: 20 });
+    assert.equal(s.tur, "sohbet");
+    assert.equal(s.grup, "Ofis personeli");
+  });
+  t("grup kelimeleri gruba göre değişmeyen soruları bozmaz", () => {
+    assert.deepEqual(motor.cevapla("ofis personeliyim bordroma nasıl ulaşırım").kaynaklar, [20]);
+    assert.deepEqual(motor.cevapla("şubem kapanacak ne yapmalıyım", { grup: "Ofis personeli" }).kaynaklar, [29]);
+  });
+}
+t("grup anahtar kelimeleri SSS sorularında ve alternatif ifadelerde geçmez (geçerse sorudan silinirdi)", () => {
+  const anahtar = (bilgi.gruplar || []).flatMap((g) => g.kelimeler.map((k) => [g.ad, sade(k)]));
+  const cakisan = [];
+  for (const k of SSS) for (const ifade of [k.soru, ...(k.alternatifler || [])]) {
+    const kel = sade(ifade).split(" ");
+    for (const [ad, a] of anahtar) if (kel.some((w) => w.startsWith(a))) cakisan.push(`${k.id}: "${ifade}" ↔ ${ad}: ${a}`);
+  }
+  assert.ok(!cakisan.length, "\n    " + cakisan.join("\n    "));
+});
+
 // ---------- 2) Alternatif ifadeler kendi maddesini bulmalı ----------
 const altHata = [];
 for (const k of SSS) for (const a of k.alternatifler || []) {
   // Birebir eşleşmeyi atlamak için noktalama değiştirilir; asıl kontrol puanlamanın kendisi
   const r = motor.cevapla(a + " lütfen");
-  const ok = r.kaynaklar.includes(k.id) || (!k.cevap && r.tur === "bos");
+  const ok = r.kaynaklar.includes(k.id) || (!cevapli(k) && r.tur === "bos");
   if (!ok) altHata.push(`${k.id}: "${a}" → ${r.tur} ${r.kaynaklar.concat(r.oneriler).join(",")}`);
 }
 t("her alternatif ifade kendi maddesine gider", () => assert.ok(!altHata.length, "\n    " + altHata.join("\n    ")));
 
-// ---------- 3) Test soruları (data/test_sorular.xlsx) ----------
+// ---------- 3) Test soruları ve sohbet senaryoları (data/test_sorular.xlsx) ----------
 const wb = new ExcelJS.Workbook();
 await wb.xlsx.readFile(new URL("../data/test_sorular.xlsx", import.meta.url).pathname.replace(/^\/(\w:)/, "$1"));
-const testler = [];
-wb.worksheets[0].eachRow((r, i) => {
-  const soru = String(r.getCell(1).text || "").trim(), bek = String(r.getCell(2).text || "").trim();
-  if (i > 1 && soru && bek) testler.push([soru, bek]);
-});
-const sayac = { dogru: 0, oneride: 0 };
-const testHata = [], oneriListesi = [];
-for (const [soru, bek] of testler) {
-  const r = motor.cevapla(soru);
-  const ozet = `"${soru}" → beklenen ${bek}, sonuç ${r.tur} ${r.kaynaklar.concat(r.oneriler).join(",")}`;
+const hucre = (r, n) => String(r.getCell(n).text || "").trim();
+
+// Sonucu beklenenle karşılaştırır: "dogru" | "oneri" (doğru madde öneri listesinde) | "hata"
+function degerlendir(r, bek) {
   if (bek === "-") {
     // SSS'de cevabı yok: doğrudan cevap verilmemeli. "Bunu mu soruyorsunuz?" diye sorması kabul edilir.
-    if (r.tur === "cevap" || r.tur === "bos") testHata.push(ozet);
-    else if (r.tur === "oneri") { sayac.oneride++; oneriListesi.push(ozet); }
-    else sayac.dogru++;
-  } else if (sohbetTurleri.has(bek)) {
-    r.tur === "sohbet" && r.metin === bilgi.sohbet.find((s) => s.tur === bek).cevap ? sayac.dogru++ : testHata.push(ozet);
-  } else {
-    const kabul = bek.split(/[,\s]+/).map(Number);
-    if (r.tur === "cevap" || r.tur === "bos") (kabul.some((n) => r.kaynaklar.includes(n)) || (r.tur === "bos" && kabul.some((n) => !SSS.find((k) => k.id === n)?.cevap))) ? sayac.dogru++ : testHata.push(ozet);
-    else if (r.tur === "oneri" && r.oneriler.some((n) => kabul.includes(n))) { sayac.oneride++; oneriListesi.push(ozet); }
-    else testHata.push(ozet);
+    return bulundu(r) || r.tur === "bos" ? "hata" : r.tur === "oneri" ? "oneri" : "dogru";
+  }
+  if (sohbetTurleri.has(bek)) return r.tur === "sohbet" && r.metin === bilgi.sohbet.find((s) => s.tur === bek).cevap ? "dogru" : "hata";
+  const kabul = bek.split(/[,\s]+/).map(Number);
+  if (bulundu(r)) return kabul.some((n) => r.kaynaklar.includes(n)) ? "dogru" : "hata";
+  if (r.tur === "bos") return kabul.some((n) => !cevapli(SSS.find((k) => k.id === n) || {})) ? "dogru" : "hata";
+  return r.tur === "oneri" && r.oneriler.some((n) => kabul.includes(n)) ? "oneri" : "hata";
+}
+const ozet = (soru, bek, r) => `"${soru}" → beklenen ${bek}, sonuç ${r.tur} ${r.kaynaklar.concat(r.oneriler).join(",")}`;
+const oneriListesi = [];
+
+const testler = [];
+wb.getWorksheet("Test").eachRow((r, i) => { if (i > 1 && hucre(r, 1) && hucre(r, 2)) testler.push([hucre(r, 1), hucre(r, 2)]); });
+const sayac = { dogru: 0, oneri: 0 }, testHata = [];
+for (const [soru, bek] of testler) {
+  const r = motor.cevapla(soru), s = degerlendir(r, bek);
+  if (s === "hata") testHata.push(ozet(soru, bek, r)); else sayac[s]++;
+  if (s === "oneri") oneriListesi.push(ozet(soru, bek, r));
+}
+t(`test soruları: ${testler.length} sorudan ${sayac.dogru} doğrudan doğru, ${sayac.oneri} öneride`, () => assert.ok(!testHata.length, "\n    " + testHata.join("\n    ")));
+
+// Senaryolar: aynı numaralı mesajlar tek sohbette sırayla yazılır, önceki cevap bağlam olur
+const senaryolar = new Map();
+wb.getWorksheet("Senaryolar")?.eachRow((r, i) => {
+  if (i > 1 && hucre(r, 1) && hucre(r, 2) && hucre(r, 3)) {
+    if (!senaryolar.has(hucre(r, 1))) senaryolar.set(hucre(r, 1), []);
+    senaryolar.get(hucre(r, 1)).push([hucre(r, 2), hucre(r, 3)]);
+  }
+});
+const sSayac = { dogru: 0, oneri: 0, adim: 0 }, sHata = [];
+for (const [no, adimlar] of senaryolar) {
+  let onceki = null;
+  for (const [soru, bek] of adimlar) {
+    const r = motor.cevapla(soru, { onceki });
+    if (r.kaynaklar.length) onceki = r.kaynaklar[0];
+    const s = degerlendir(r, bek);
+    sSayac.adim++;
+    if (s === "hata") sHata.push(`senaryo ${no}: ` + ozet(soru, bek, r)); else sSayac[s]++;
   }
 }
-t(`test soruları: ${testler.length} sorudan ${sayac.dogru} doğrudan doğru, ${sayac.oneride} öneride`, () => assert.ok(!testHata.length, "\n    " + testHata.join("\n    ")));
+t(`sohbet senaryoları: ${senaryolar.size} senaryo, ${sSayac.adim} mesajdan ${sSayac.dogru} doğrudan doğru, ${sSayac.oneri} öneride`, () => assert.ok(!sHata.length, "\n    " + sHata.join("\n    ")));
 
 // ---------- 4) Otomatik yazım hataları ----------
 const KOMSU = { q: "wa", w: "qes", e: "wrd", r: "etf", t: "ryg", y: "tuh", u: "yij", i: "uok", o: "ipl", p: "o", a: "qsz", s: "adw", d: "sfe", f: "dgr", g: "fht", h: "gjy", j: "hku", k: "jli", l: "k", z: "xa", x: "zc", c: "xv", v: "cb", b: "vn", n: "bm", m: "n" };
@@ -120,12 +202,12 @@ function boz(w) {
 }
 const oto = { n: 0, dogru: 0, oneri: 0, yanlis: 0, kayip: 0 };
 const otoYanlis = [], otoKayip = [];
-for (const k of SSS.filter((x) => x.cevap)) for (let d = 0; d < 10; d++) {
+for (const k of SSS.filter(cevapli)) for (let d = 0; d < 10; d++) {
   const kel = sade(k.soru).split(" ");
   for (let x = 1 + Math.floor(rnd() * 2); x > 0; x--) { const j = Math.floor(rnd() * kel.length); kel[j] = boz(kel[j]); }
   const r = motor.cevapla(kel.join(" "));
   oto.n++;
-  if (r.tur === "cevap") { if (r.kaynaklar[0] === k.id) oto.dogru++; else { oto.yanlis++; otoYanlis.push(`"${kel.join(" ")}" → ${r.kaynaklar} (beklenen ${k.id})`); } }
+  if (bulundu(r)) { if (r.kaynaklar[0] === k.id) oto.dogru++; else { oto.yanlis++; otoYanlis.push(`"${kel.join(" ")}" → ${r.kaynaklar} (beklenen ${k.id})`); } }
   else if (r.tur === "oneri" && r.oneriler.includes(k.id)) oto.oneri++;
   else { oto.kayip++; otoKayip.push(`"${kel.join(" ")}" → ${r.tur} ${r.oneriler} (beklenen ${k.id})`); }
 }
@@ -134,7 +216,9 @@ t(`otomatik ${oto.n} bozuk soru: doğrudan ${yuzde(oto.dogru)}, öneride ${yuzde
   assert.ok(oto.yanlis / oto.n <= 0.01, "yanlış cevap oranı %1'in üstünde:\n    " + otoYanlis.join("\n    ")));
 
 for (const [d, ad] of sonuc) console.log(d, ad);
-if (oneriListesi.length) console.log("\nÖneri listesiyle cevaplananlar (doğru madde listede):\n  " + oneriListesi.join("\n  "));
+// Öneriye düşen sorular uzun bir liste olabilir: yalnızca istenirse yazılır (npm test -- --detay)
+if (oneriListesi.length && process.argv.includes("--detay")) console.log("\nÖneri listesiyle cevaplananlar (doğru madde listede):\n  " + oneriListesi.join("\n  "));
+else if (oneriListesi.length) console.log(`\n${oneriListesi.length} soru öneri listesiyle cevaplandı (ayrıntı: npm test -- --detay)`);
 if (otoYanlis.length) console.log("\nOtomatik testte yanlış cevaplananlar (sınır %1):\n  " + otoYanlis.join("\n  "));
 if (otoKayip.length) console.log("\nOtomatik testte bulunamayanlar:\n  " + otoKayip.join("\n  "));
 console.log(hataVar ? "\nBazı testler geçmedi." : "\nTüm testler geçti.");

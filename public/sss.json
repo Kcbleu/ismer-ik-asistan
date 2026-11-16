@@ -166,34 +166,64 @@
       "id": 16,
       "kategori": "İzinler / İzin Yönetim Sistemi",
       "soru": "Kalan yıllık izin gün sayısını nasıl öğrenebilirim?",
-      "cevap": "https://iys.ismer.com.tr/pdh adresi ile ulaşılan İzin Yönetim Sistemi üzerinden kalan izin gün sayısını görüntüleyebilirsiniz.",
+      "cevap": "",
       "alternatifler": [
         "Kaç gün iznim kaldı?",
         "Yıllık izin günümü nereden görebilirim?"
       ],
-      "giris": ""
+      "giris": "",
+      "gruplar": [
+        {
+          "ad": "Banka PDH personeli",
+          "cevap": "https://iys.ismer.com.tr/pdh adresi ile ulaşılan İzin Yönetim Sistemi üzerinden kalan izin gün sayısını görüntüleyebilirsiniz."
+        },
+        {
+          "ad": "Ofis personeli",
+          "cevap": "Kalan yıllık izin gün sayınızı Bilişim HR üzerinden görüntüleyebilirsiniz."
+        }
+      ]
     },
     {
       "id": 17,
       "kategori": "İzinler / İzin Yönetim Sistemi",
       "soru": "İşmer çalışanı için izin ve istirahat raporu girişi yapmak istiyorum, nasıl bir yol izleyebilirim?",
-      "cevap": "İzin ve rapor girişleri için https://iys.ismer.com.tr/pdh adresinden İzin Yönetim Sistemi üzerinden izin formu ve istirahat raporunun görüntüsünü ekleyerek giriş yapabilirsiniz.\nŞifre işlemi için: \"Şifremi unuttum\" kısmına tıklarsanız kullanıcı adı ve şifreniz şube mailinize aktarılacaktır.",
+      "cevap": "",
       "alternatifler": [
         "İstirahat raporunu sisteme nasıl girerim?",
         "Personelin raporunu nereye yükleyeceğim?"
       ],
-      "giris": ""
+      "giris": "",
+      "gruplar": [
+        {
+          "ad": "Banka PDH personeli",
+          "cevap": "İzin ve rapor girişleri için https://iys.ismer.com.tr/pdh adresinden İzin Yönetim Sistemi üzerinden izin formu ve istirahat raporunun görüntüsünü ekleyerek giriş yapabilirsiniz.\nŞifre işlemi için: \"Şifremi unuttum\" kısmına tıklarsanız kullanıcı adı ve şifreniz şube mailinize aktarılacaktır."
+        },
+        {
+          "ad": "Ofis personeli",
+          "cevap": "Ofis personelinin izin işlemleri Bilişim HR üzerinden yürütülmektedir. İstirahat raporunuzu nasıl ileteceğinizle ilgili İnsan Kaynakları Bölümümüze ulaşabilirsiniz (insan.kaynaklari@ismer.com.tr)."
+        }
+      ]
     },
     {
       "id": 18,
       "kategori": "İzinler / İzin Yönetim Sistemi",
       "soru": "İşmer çalışanı için izin girişi yapmak istiyorum, izin formuna nereden ulaşabilirim?",
-      "cevap": "Sistemde izin girişi yaparken izin türü ve izin tarihleri seçildiğinde sistem izin formunu otomatik olarak üretmektedir.",
+      "cevap": "",
       "alternatifler": [
         "İzin formu nerede?",
         "İzin dilekçesini nereden alırım?"
       ],
-      "giris": ""
+      "giris": "",
+      "gruplar": [
+        {
+          "ad": "Banka PDH personeli",
+          "cevap": "Sistemde izin girişi yaparken izin türü ve izin tarihleri seçildiğinde sistem izin formunu otomatik olarak üretmektedir."
+        },
+        {
+          "ad": "Ofis personeli",
+          "cevap": "Ofis personelinin izin işlemleri Bilişim HR üzerinden yürütülmektedir. İzin formuyla ilgili sorularınızı İnsan Kaynakları Bölümümüze iletebilirsiniz (insan.kaynaklari@ismer.com.tr)."
+        }
+      ]
     },
     {
       "id": 19,
@@ -492,7 +522,10 @@
         "evrak",
         "belge",
         "doküman",
-        "kağıt"
+        "kağıt",
+        "doğum raporu",
+        "epikriz",
+        "kimlik belgesi"
       ]
     },
     {
@@ -521,7 +554,11 @@
       "kelimeler": [
         "provizyon",
         "kabul etmedi",
-        "geri çevirdi"
+        "geri çevirdi",
+        "onay alamadım",
+        "onay çıkmadı",
+        "onay vermedi",
+        "reddedildi"
       ]
     },
     {
@@ -562,7 +599,8 @@
         "taşınacağım",
         "nakliye",
         "ev değiştirme",
-        "ev taşıma"
+        "ev taşıma",
+        "yeni eve"
       ]
     },
     {
@@ -571,7 +609,6 @@
         "maaş",
         "maaşım",
         "ücret",
-        "brüt",
         "net maaş"
       ]
     },
@@ -589,7 +626,10 @@
       "kelimeler": [
         "BES",
         "bireysel emeklilik",
-        "cayma"
+        "cayma",
+        "otomatik katılım",
+        "emeklilik kesintisi",
+        "anadolu hayat"
       ]
     },
     {
@@ -649,7 +689,9 @@
         "ayakkabı",
         "forma",
         "yelek",
-        "mont"
+        "mont",
+        "beden",
+        "bedenim"
       ]
     },
     {
@@ -676,7 +718,11 @@
         "mesai saati",
         "vardiya",
         "kaçta başlıyor",
-        "kaçta bitiyor"
+        "kaçta bitiyor",
+        "işbaşı",
+        "iş başı",
+        "giriş saati",
+        "çıkış saati"
       ]
     },
     {
@@ -701,8 +747,10 @@
         "başvuru",
         "iş başvurusu",
         "CV",
+        "özgeçmiş",
         "iş ilanı",
-        "işe girmek"
+        "işe girmek",
+        "iş arıyorum"
       ]
     },
     {
@@ -714,15 +762,23 @@
         "eleman lazım",
         "personel lazım",
         "eleman ihtiyacı",
-        "personel ihtiyacı"
+        "personel ihtiyacı",
+        "kadro",
+        "kadro açığı",
+        "eleman eksik",
+        "personel eksik"
       ]
     },
     {
       "kavram": "iptal",
       "kelimeler": [
         "iptal",
+        "iptal etmek",
         "vazgeçmek",
+        "sil",
+        "silmek",
         "sildirmek",
+        "silinsin",
         "geri almak"
       ]
     },
@@ -732,7 +788,10 @@
         "telefon",
         "telefondan",
         "mobil",
-        "cep telefonu"
+        "cep telefonu",
+        "akıllı telefon",
+        "iphone",
+        "android"
       ]
     },
     {
@@ -740,7 +799,9 @@
       "kelimeler": [
         "web sitesi",
         "internet sitesi",
-        "site"
+        "site",
+        "web adresi",
+        "internet adresi"
       ]
     },
     {
@@ -766,7 +827,8 @@
       "kelimeler": [
         "limit",
         "tavan",
-        "üst sınır"
+        "üst sınır",
+        "sınır"
       ]
     },
     {
@@ -778,6 +840,92 @@
         "girilir",
         "girebilirim",
         "girmek"
+      ]
+    },
+    {
+      "kavram": "dahil etme",
+      "kelimeler": [
+        "dahil",
+        "dahil etmek",
+        "dahil olmak",
+        "ekleme",
+        "eklemek",
+        "ekletmek",
+        "eklenir",
+        "eklensin",
+        "ekleyebilir",
+        "ekletebilir"
+      ]
+    },
+    {
+      "kavram": "kalan izin",
+      "kelimeler": [
+        "kalan",
+        "kalan izin",
+        "kalan gün",
+        "bakiye",
+        "izin bakiyesi",
+        "kaç gün kaldı"
+      ]
+    },
+    {
+      "kavram": "kişisel e-posta",
+      "kelimeler": [
+        "şahsi",
+        "kişisel",
+        "kendi mailim",
+        "gmail",
+        "hotmail",
+        "yahoo",
+        "yandex",
+        "icloud"
+      ]
+    },
+    {
+      "kavram": "izin formu",
+      "kelimeler": [
+        "izin formu",
+        "izin kağıdı",
+        "izin dilekçesi",
+        "izin belgesi"
+      ]
+    },
+    {
+      "kavram": "aile yakını",
+      "kelimeler": [
+        "annem",
+        "babam",
+        "kardeşim",
+        "dedem",
+        "ninem",
+        "anneanne",
+        "babaanne",
+        "kayınvalide",
+        "kayınpeder",
+        "kaynana",
+        "amcam",
+        "dayım",
+        "teyzem",
+        "yakınım"
+      ]
+    },
+    {
+      "kavram": "brüt",
+      "kelimeler": [
+        "brüt",
+        "brüt ücret",
+        "brüt maaş"
+      ]
+    },
+    {
+      "kavram": "aktif olma",
+      "kelimeler": [
+        "aktif",
+        "aktif olmak",
+        "devreye",
+        "devreye girmek",
+        "yürürlüğe",
+        "yürürlüğe girmek"
       ]
     }
   ],
@@ -797,7 +945,7 @@
         "hayırlı işler",
         "kolay gelsin"
       ],
-      "cevap": "Merhaba, ben İşmer İnsan Kaynakları'nın asistanı Pusula. Size nasıl yardımcı olabilirim?"
+      "cevap": "Merhaba, ben İşmer Asistan. İnsan Kaynakları ile ilgili sorularınızı yanıtlıyorum. Size nasıl yardımcı olabilirim?"
     },
     {
       "tur": "tesekkur",
@@ -823,7 +971,7 @@
         "insan mısın",
         "gerçek kişi misin"
       ],
-      "cevap": "Ben Pusula, İşmer İnsan Kaynakları'nın asistanıyım. Sık sorulan sorulardaki bilgilerle izin, bordro, sağlık sigortası, yemek kartı gibi konularda yardımcı olurum."
+      "cevap": "Ben İşmer Asistan, İşmer İnsan Kaynakları'nın sohbet asistanıyım. Sık sorulan sorulardaki bilgilerle izin, bordro, sağlık sigortası, yemek kartı gibi konularda yardımcı olurum."
     },
     {
       "tur": "nasilsin",
@@ -883,6 +1031,33 @@
       "tur": "oneri_tek",
       "ifadeler": [],
       "cevap": "Sorunuzu tam anlayamadım. Bunu mu soruyorsunuz?"
+    },
+    {
+      "tur": "grup_sor",
+      "ifadeler": [],
+      "cevap": "Bu konuda izlenecek yol personel grubunuza göre değişiyor. Hangi gruptasınız?"
+    },
+    {
+      "tur": "grup_tamam",
+      "ifadeler": [],
+      "cevap": "Teşekkürler, bundan sonra “{grup}” için geçerli bilgileri göstereceğim. Sorunuzu yazabilirsiniz."
+    }
+  ],
+  "gruplar": [
+    {
+      "ad": "Banka PDH personeli",
+      "secenek": "Banka PDH personeliyim",
+      "kelimeler": [
+        "banka",
+        "pdh"
+      ]
+    },
+    {
+      "ad": "Ofis personeli",
+      "secenek": "Ofis personeliyim",
+      "kelimeler": [
+        "ofis"
+      ]
     }
   ]
 }
